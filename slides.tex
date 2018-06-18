@@ -1,0 +1,182 @@
+ \documentclass[t, xcolor=table]{beamer}
+%\documentclass[c]{beamer}
+\listfiles
+
+\newcommand*{\xMin}{-6}%
+\newcommand*{\xMax}{6}%
+\newcommand*{\yMin}{-6}%
+\newcommand*{\yMax}{5}%
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+
+\defbeamertemplate{subsubsection in toc}{subsubsections numbered}
+{\leavevmode\leftskip=3em%
+ \rlap{\hskip-3em\inserttocsectionnumber.\inserttocsubsectionnumber.\inserttocsubsubsectionnumber}%
+ \inserttocsubsubsection\par}
+
+
+
+\mode<presentation>
+{
+  \usetheme[usefoot,english,cmyk,titlepage0]{KIT}
+% \usetheme[usefoot]{KIT}
+% \usetheme{KIT}
+
+%%  \usefonttheme{structurebold}
+
+  \setbeamercovered{transparent}
+
+  %\setbeamertemplate{enumerate items}[circle]
+  \setbeamertemplate{enumerate items}[ball]
+%  \setbeamerfont{section in toc}{color=black}
+  \setbeamercolor{section number projected}{bg=black,fg=yellow}
+  \setbeamertemplate{subsection in toc}[subsubsections numbered]
+
+}
+\usepackage{tabularx}
+\usepackage{pdfpages}
+\usepackage{caption}
+\usepackage{pbox}
+\usepackage{multirow}
+\usepackage{babel}
+\usepackage{feynmp-auto}
+\usetikzlibrary{calc}
+\date{09.07.2018}
+%\DateText
+
+\newlength{\Ku}
+\setlength{\Ku}{1.43375pt}
+
+\usepackage[latin1]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[makeroom]{cancel}
+\usepackage{subfigure}
+\usepackage{xspace}
+%\usenavigationsymbols
+%\usenavigationsymbols[sfHhdb]
+%\usenavigationsymbols[sfhHb]
+\newcommand{\verysmall}{\fontsize{6pt}{8.6pt}\selectfont}
+\usepackage{siunitx}
+
+
+\DeclareSIUnit\clight{\ensuremath{c}}
+\DeclareSIUnit[per-mode=symbol]\GeVc{\GeV\per\clight}
+\DeclareSIUnit[per-mode=symbol]\GeVcc{\GeV\per\clight\squared}
+\DeclareSIUnit\fb{\femto\barn}
+\DeclareSIUnit\invfb{\per\femto\barn}
+
+\newenvironment<>{neutralblock}[1]{%
+  \begin{actionenv}#2%
+      \def\insertblocktitle{#1}%
+      \par%
+      \mode<presentation>{%
+        \setbeamercolor{block title}{fg=white,bg=gray!70!black}
+       \setbeamercolor{block body}{fg=black,bg=gray!50}
+       \setbeamercolor{itemize item}{fg=white}
+       \setbeamertemplate{itemize item}[triangle]
+     }%
+      \usebeamertemplate{block begin}}
+    {\par\usebeamertemplate{block end}\end{actionenv}}
+
+\newenvironment<>{redblock}[1]{%
+  \begin{actionenv}#2%
+      \def\insertblocktitle{#1}%
+      \par%
+      \mode<presentation>{%
+        \setbeamercolor{block title}{fg=white,bg=red!70!black}
+       \setbeamercolor{block body}{fg=black,bg=red!30}
+       \setbeamercolor{itemize item}{fg=white}
+       \setbeamertemplate{itemize item}[triangle]
+     }%
+      \usebeamertemplate{block begin}}
+    {\par\usebeamertemplate{block end}\end{actionenv}}
+
+\newenvironment<>{blueblock}[1]{%
+  \begin{actionenv}#2%
+      \def\insertblocktitle{#1}%
+      \par%
+      \mode<presentation>{%
+        \setbeamercolor{block title}{fg=white,bg=blue!70!black}
+       \setbeamercolor{block body}{fg=black,bg=blue!30!white!80}
+       \setbeamercolor{itemize item}{fg=white}
+       \setbeamertemplate{itemize item}[triangle]
+     }%
+      \usebeamertemplate{block begin}}
+    {\par\usebeamertemplate{block end}\end{actionenv}}
+
+\newenvironment<>{greenblock}[1]{%
+  \begin{actionenv}#2%
+      \def\insertblocktitle{#1}%
+      \par%
+      \mode<presentation>{%
+        \setbeamercolor{block title}{fg=white,bg=green!70!black}
+       \setbeamercolor{block body}{fg=black,bg=green!50}
+       \setbeamercolor{itemize item}{fg=white}
+       \setbeamertemplate{itemize item}[triangle]
+     }%
+      \usebeamertemplate{block begin}}
+    {\par\usebeamertemplate{block end}\end{actionenv}}
+
+\title[]{Modeling and Simulation of Load Balancing Strategies for Computing in High Energy Physics}
+\subtitle{Karlsruhe Institute of Technology (KIT)}
+
+\subtitle[Ren\'e Caspart]{\underline{\smash{Ren\'e Caspart}}, Patrick Firnkes, Manuel Giffels, Anne Koziolek, G\"unter Quast, Ralf Reussner}
+
+\AuthorTitleSep{\relax}
+
+\institute[]{KARLSRUHE INSTITUTE OF TECHNOLOGY (KIT)}
+
+\TitleImage[width=\titleimagewd]{Bilder/KIT-Titel}
+
+\newlength{\tmplen}
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \maketitle
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginSection[]
+{
+\begin{frame}
+\frametitle{Table of Contents}
+\tableofcontents[currentsection,%currentsubsection, 
+%    hideothersubsections, 
+    sectionstyle=show/shaded,
+    subsectionstyle=hide/hide,
+]
+\end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Motivation}
+\begin{frame}
+    \frametitle{Motivation}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \begin{itemize}
+                \item 1
+                \item 2
+            \end{itemize}
+        \end{column}
+        \hfill
+        \begin{column}{0.45\textwidth}
+            \begin{itemize}
+                \item 3
+                \item 4
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+
+
+
+\end{document}
