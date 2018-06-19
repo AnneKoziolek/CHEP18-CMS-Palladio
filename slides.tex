@@ -288,6 +288,41 @@
 \end{columns}
 \end{frame}
 
+\begin{frame}[c]
+    \frametitle{Model Parameter Calibration}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            Data sources:
+
+            \begin{itemize}
+                \item Historical job monitoring data
+                \begin{itemize}
+                    \item JobMonitoring, WMArchive job reports
+                    \item From CERN Hadoop analytix cluster using CMSSpark framework \\
+                    \scriptsize{(Kuznetsov)}
+                \end{itemize}
+                \item Site VO resource share and node benchmarks
+            \end{itemize}
+        \end{column}
+        \hfill
+        \begin{column}{0.45\textwidth}
+            Obtaining model parameters:
+
+            \begin{itemize}
+                \item Match jobs and node performance information
+                \item Group computing jobs by type and requirements
+                \item Extract resource demand distributions and load composition
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\note[itemize]{
+    \item Model relies on accurate laod and job resource requirement descriptions
+    \item Matching job reports from different subsystems heuristically due to differing monitoring record structures
+    \item Simulation model is being generated from extracted model parameters
+}
+
 \section*{Results}
 \begin{frame}
 \frametitle{Results}
@@ -295,9 +330,7 @@
 \end{frame}
 
 \note[itemize]{
-	\item Required time to simulate one week is 12-13min.
-	\item Validated with throughput and share of completed jobs per type
-	\item Not yet validated with measured utilization.
+	\item
 }
 
 \section*{Outlook}
