@@ -324,13 +324,30 @@
 }
 
 \section*{Results}
+
 \begin{frame}
 \frametitle{Results}
-			\includegraphics[scale=0.42]{Bilder/utilization}
+\begin{columns}
+	\begin{column}{0.45\textwidth}
+		\includegraphics[scale=0.4]{Bilder/durchsatz}
+	\end{column}
+	\begin{column}{0.45\textwidth}
+		\includegraphics[scale=0.45]{Bilder/anteil-simuliert}
+		\includegraphics[scale=0.45]{Bilder/anteil-gemessen}
+	\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Results}
+\includegraphics[scale=0.42]{Bilder/utilization}
 \end{frame}
 
 \note[itemize]{
-	\item
+	\item Required time to simulate one week is 12min.
+	\item Validated with throughput and share of completed jobs per type
+	\item Not yet validated with measured utilization.
+	\item data from 2018-01tomid02
 }
 
 \section*{Outlook}
