@@ -42,7 +42,7 @@
 \usepackage{babel}
 \usepackage{feynmp-auto}
 \usetikzlibrary{calc}
-\date{09.07.2018}
+\date{2018-07-09}
 %\DateText
 
 \newlength{\Ku}
@@ -162,16 +162,48 @@
     \begin{columns}
         \begin{column}{0.45\textwidth}
             \begin{itemize}
-                \item 1
-                \item 2
+                \item Flat computing budget model does not cover future needs for computing resources
+                \item Need to find ways to deal with this lack of resources
+                \begin{itemize}
+                    \item Addition of non-HEP specific resources
+                    \item Improvement of used algorithms and software
+                    \item Improvement of utilization of computing centers
+                \end{itemize}
             \end{itemize}
         \end{column}
         \hfill
+        \begin{column}{0.5\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth]{Bilder/CPU_resources_budget}
+                \hspace{-2cm}
+                \tiny{https://arxiv.org/abs/1712.06982}
+                %\includegraphics[width=\textwidth]{Images/cpuefficiency_T1s_allactivities}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Current Status}
+    \begin{columns}
         \begin{column}{0.45\textwidth}
             \begin{itemize}
-                \item 3
-                \item 4
+                \item Efficiency of utilization of grid sites not optimal
+                \item We want to address two effects 
+                \begin{itemize}
+                    \item Impact on efficiency due to site limitations (e.g. network or storage bandwidth)
+                    \item Impact on efficiency due to scheduling overhead
+                \end{itemize}
             \end{itemize}
+        \end{column}
+        \hfill
+        \begin{column}{0.5\textwidth}
+            \begin{center}
+                \vspace{-4ex}
+                \includegraphics[width=\textwidth]{Bilder/Eff_T0_T1}
+                \vspace{2ex}
+                \includegraphics[width=\textwidth]{Bilder/CPU_eff_gridKa}
+            \end{center}
         \end{column}
     \end{columns}
 \end{frame}
