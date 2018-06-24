@@ -214,49 +214,44 @@
 \begin{frame}
 \frametitle{Palladio Simulator}
 \begin{columns}
-	\begin{column}{0.45\textwidth}
+	\begin{column}{0.47\textwidth}
 		\begin{itemize}
-			 \setlength\itemsep{1em}
-			\item Model driven software architecture simulator
-			\item Developed at KIT, FZI and University of Paderborn
-			\item Enables performance predictions \\ {\scriptsize (Reussner et al., 2016)}
-		\end{itemize}
-		\putat{50}{-45}{\includegraphics[scale=0.5]{Bilder/palladio-logo}}
-		\putat{50}{-55}{{\scriptsize Palladio Logo}}
-		\putat{35}{-65}{{\scriptsize (http://palladio-simulator.com)}}
-	\end{column}
-	\hfill
-	\begin{column}{0.45\textwidth}
-		\begin{itemize}
-			 \setlength\itemsep{1em}
+					\setlength\itemsep{1em}
+			\item Enables performance predictions for design decisions
+			\item Event-based model driven software architecture simulator
+			\item Model on abstract level: Express resource needs of jobs as statistical distribution
 			\item Extended for simulation of Cloud Computing/HPC
 			\begin{itemize}
-				\item Architectural Templates \\ {\scriptsize (Lehrig \& Becker, 2016)}
-				\item SimuLizar \\ {\scriptsize (Becker et al., 2013)}
-
+				\item Architectural Templates: Model large systems efficiently
+				\item SimuLizar: Simulate self adapting systems
 			\end{itemize}
-			\item Successfully used for optimizing cloud infrastructure \\ {\scriptsize (Ostberg et al., 2014)}
-
 		\end{itemize}
+	\end{column}
+	\hfill
+	\begin{column}{0.5\textwidth}
+		\begin{itemize}
+			\item Successfully used for optimizing cloud infrastructure as part of the CACTOS project
+		\end{itemize}
+			\begin{center}
+				\includegraphics[width=\textwidth]{Bilder/palladio}
+				\tiny{Graphical Interface of the Palladio Eclipse Plugin}
+			\end{center}
+
 	\end{column}
 \end{columns}
 \end{frame}
 
 \note[itemize]{
-
+\item Developed at KIT, FZI and University of Paderborn
 \item Palladio should be used to evaluate different load balancing strategies or other design decisions (like infrastructure improvements).
 
 \item Architectural Templates: Enables one to efficiently model large systems (E.g. instead of modeling 1000 servers manuelly, model one server and architectural templates duplicates this server 1000 times).
-
-\item SimuLizar: Simulation engine that enables one to model self adpating systems.
-
-\item Palladio/SimuLizar successfully used to optimize cloud infrastructure as part of the CACTOS project
+\item SimuLizar: Simulate slef adapting systems
 }
 
-
-\section*{Model}
+\section*{Model Computing Jobs}
 \begin{frame}
-\frametitle{Model}
+\frametitle{Model Computing Jobs}
 \begin{columns}
 	\begin{column}{0.45\textwidth}
 		\begin{itemize}
@@ -267,32 +262,18 @@
 					\item Required job slots
 					\item Number of events
 				\end{itemize}
-			\item Model each type of computing node
+			\item Model load balancing strategy
 				\begin{itemize}
-					\item Number and processing speed of cores
-					\item Processing speed of I/O
-					\item Number of job slots
-					\item Number of instances of node
+					\item First fit search based on available job slots
+					\item Easily modifiable to evaluate new strategies
 				\end{itemize}
 			\end{itemize}
 	\end{column}
 	\hfill
 	\begin{column}{0.45\textwidth}
-		\begin{itemize}
-		\setlength\itemsep{1em}
-		\item Model load balancing strategy
-			\begin{itemize}
-				\item First fit search based on available job slots
-				\item Easily modifiable to evaluate new strategies
-			\end{itemize}
-		
-		\item Model high load on system
-			\begin{itemize}
-				\item Closed workload
-				\item Enough jobs to guarantee that systems never idles
-				\item Each job type has configurable share of load
-			\end{itemize}
-		\end{itemize}
+		\begin{center}
+			\includegraphics[width=\textwidth]{Bilder/component}
+		\end{center}
 	\end{column}
 \end{columns}
 \end{frame}
@@ -302,20 +283,35 @@
 	
 	\item Required Resources are probability distributions
 	\item Jobs block and wait for free slots if not enough job slots are available on working node.
-		
-	\item Closed workload: there are always 2500 jobs being processed or waiting to be processed.
 }
 
 
 \begin{frame}
-\frametitle{Model}
+\frametitle{Model Resource Container}
 \begin{columns}
 	\begin{column}{0.45\textwidth}
-			\includegraphics[scale=0.5]{Bilder/model-container}
+		\begin{itemize}
+			\setlength\itemsep{1em}
+			\item Model each type of computing node
+			\begin{itemize}
+				\item Number and processing speed of cores
+				\item Processing speed of I/O
+				\item Number of job slots
+				\item Number of instances of node
+			\end{itemize}
+			
+			\item Model high load on system
+			\begin{itemize}
+				\item Closed workload
+				\item Enough jobs to guarantee that systems never idles
+				\item Each job type has configurable share of load
+			\end{itemize}
+		\end{itemize}
 	\end{column}
-
 	\begin{column}{0.45\textwidth}
-			\includegraphics[scale=0.5]{Bilder/component}
+		\begin{center}
+			\includegraphics[width=\textwidth]{Bilder/model-container}
+		\end{center}
 	\end{column}
 \end{columns}
 \end{frame}
