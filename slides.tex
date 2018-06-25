@@ -317,32 +317,22 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{Model Parameter Calibration}
-    \begin{columns}
-        \begin{column}{0.45\textwidth}
-            Data sources:
-
-            \begin{itemize}
-                \item Historical job monitoring data
-                \begin{itemize}
-                    \item JobMonitoring, WMArchive job reports
-                    \item From CERN Hadoop analytix cluster using CMSSpark framework \\
-                    \scriptsize{(Kuznetsov)}
-                \end{itemize}
-                \item Site VO resource share and node benchmarks
-            \end{itemize}
-        \end{column}
-        \hfill
-        \begin{column}{0.45\textwidth}
-            Obtaining model parameters:
-
-            \begin{itemize}
-                \item Match jobs and node performance information
-                \item Group computing jobs by type and requirements
-                \item Extract resource demand distributions and load composition
-            \end{itemize}
-        \end{column}
-    \end{columns}
+    \frametitle{Model Calibration Data Sources}
+    
+    \begin{itemize}
+        \item Global job monitoring data
+        \begin{itemize}
+            \item CMS jobs at GridKa for proof of concept
+            \item JobMonitoring, WMArchive job reports
+            \item From CERN Hadoop analytix cluster using CMSSpark framework \\
+            \scriptsize{(Kuznetsov)}
+        \end{itemize}
+        \item Site-specific performance data
+        \begin{itemize}
+            \item VO resource share
+            \item Node benchmarks
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 \note[itemize]{
@@ -350,6 +340,28 @@
     \item Matching job reports from different subsystems heuristically due to differing monitoring record structures
     \item Simulation model is being generated from extracted model parameters
 }
+
+\begin{frame}[c]{Model Calibration Process}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+%            Obtaining model parameters:
+
+            \begin{enumerate}
+                \item Match jobs and node performance information
+                \item Group computing jobs by type and requirements
+                \item Extract resource demand distributions and load composition
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{center}
+            \includegraphics[width=\textwidth]{Bilder/histogram_CPUDemand_all-2018-03to04}
+            \end{center}   
+        \end{column}
+
+    \end{columns}
+    
+\end{frame}
+
 
 \section*{Results}
 
