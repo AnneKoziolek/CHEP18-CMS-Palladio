@@ -317,22 +317,32 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{Model Calibration Data Sources}
+    \frametitle{Simulating CMS Jobs at GridKa}
     
-    \begin{itemize}
-        \item Global job monitoring data
-        \begin{itemize}
-            \item CMS jobs at GridKa for proof of concept
-            \item JobMonitoring, WMArchive job reports
-            \item From CERN Hadoop analytix cluster using CMSSpark framework \\
-            \scriptsize{(Kuznetsov)}
-        \end{itemize}
-        \item Site-specific performance data
-        \begin{itemize}
-            \item VO resource share
-            \item Node benchmarks
-        \end{itemize}
-    \end{itemize}
+    Data Sources:
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \begin{itemize}
+                \item Global job monitoring data
+                \begin{itemize}
+                    \item JobMonitoring, WMArchive job reports \\
+                    {\scriptsize from Hadoop analytix cluster with CMSSpark framework (Kuznetsov)}
+                    \item Currently extracting CMS jobs at GridKa
+                \end{itemize}
+                \item Site-specific performance data
+                \begin{itemize}
+                    \item VO resource share
+                    \item Node benchmarks
+                \end{itemize}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth]{Bilder/histogram_CPUDemand_all-2018-03to04}
+            \end{center}
+        \end{column}
+    \end{columns}
+
 \end{frame}
 
 \note[itemize]{
@@ -344,17 +354,21 @@
 \begin{frame}[c]{Model Calibration Process}
     \begin{columns}
         \begin{column}{0.45\textwidth}
-%            Obtaining model parameters:
-
+            \setbeamertemplate{enumerate items}[default]
+            
+            Model parameter extraction tool:
+            \vspace{1em}
             \begin{enumerate}
-                \item Match jobs and node performance information
-                \item Group computing jobs by type and requirements
-                \item Extract resource demand distributions and load composition
+                \item \alert{Match} jobs and node performance information
+                \item \alert{Group} computing jobs by type and requirements
+                \item \alert{Extract} resource demand distributions and load composition
             \end{enumerate}
+
+            
         \end{column}
         \begin{column}{0.45\textwidth}
             \begin{center}
-            \includegraphics[width=\textwidth]{Bilder/histogram_CPUDemand_all-2018-03to04}
+            \includegraphics[width=0.8\textwidth]{Bilder/model-parameter-process.pdf}
             \end{center}   
         \end{column}
 
