@@ -218,33 +218,37 @@
 
 \section*{Concept \& Proof of Work}
 \begin{frame}
-\frametitle{Concept \& Proof of Work}
-\begin{columns}
-	\begin{column}{0.45\textwidth}
-		\begin{exampleblock}{Concept}
-		\begin{itemize}
-			\setlength\itemsep{1em}
-			\item Create simulation for WLCG to optimize resource usage
-			\begin{itemize}
-				\item Evaluate load balancing strategies
-				\item Evaluate grid infrastructure improvements
-				\item Evaluate scheduling decisions
-			\end{itemize}
-		\end{itemize}
-	\end{exampleblock}
-	\end{column}
-	\hfill
-	\begin{column}{0.45\textwidth}
-		\begin{exampleblock}{Proof of work}
+\frametitle{Approach}
+
+    Create simulation for WLCG to optimize resource usage
+    \vspace{1em}
+	\begin{itemize}
+		\item Evaluate load balancing strategies
+		\item Evaluate grid infrastructure improvements
+		\item Evaluate scheduling decisions
+    \end{itemize}
+    \vfill
+    \begin{exampleblock}{Proof of Concept}
+    \vspace{0.2em}
 			\begin{itemize}
 			\item Created simulation for CMS computing jobs at GridKa
-			\item Used Palladio Simulator as foundation
+			\item Used \alert{Palladio Simulator} as foundation
 			\item Implemented automatic parameter extraction and model creation
 			\item Validated first results
 			\end{itemize}
 	\end{exampleblock}
-	\end{column}
-\end{columns}
+
+    
+%\begin{columns}
+%	\begin{column}{0.45\textwidth}
+%		\begin{exampleblock}{Concept}
+%		\end{itemize}
+%	\end{exampleblock}
+%	\end{column}
+%	\hfill
+%	\begin{column}{0.45\textwidth}
+%	\end{column}
+%\end{columns}
 \end{frame}
 
 \note[itemize]{
@@ -255,21 +259,23 @@
 \begin{frame}
 \frametitle{Palladio Simulator}
 \begin{columns}
-	\begin{column}{0.47\textwidth}
+	\begin{column}{0.45\textwidth}
 		\begin{itemize}
-					\setlength\itemsep{1em}
+					\setlength\itemsep{0.2em}
 			\item Enables performance predictions for design decisions
 			\item Event-based model driven software architecture simulator
-			\item Model on abstract level: Express resource needs of jobs as statistical distribution
+			\item Model on abstract level: Express resource needs of jobs as statistical distributions
 			\item Extended for simulation of Cloud Computing/HPC
 			\begin{itemize}
-				\item Architectural Templates: Model large systems efficiently
-				\item SimuLizar: Simulate self adapting systems
+				\item Architectural Templates\\
+				{\scriptsize modeling large systems efficiently}
+				\item SimuLizar \\
+				{\scriptsize self-adaptive systems}
 			\end{itemize}
 		\end{itemize}
 	\end{column}
 	\hfill
-	\begin{column}{0.5\textwidth}
+	\begin{column}{0.45\textwidth}
 		\begin{itemize}
 			\item Successfully used for optimizing cloud infrastructure as part of the CACTOS project
 		\end{itemize}
@@ -453,22 +459,23 @@
 }
 
 \section*{Outlook}
-\begin{frame}
-\frametitle{Outlook}
-\begin{columns}
-	\begin{column}{0.45\textwidth}
-		\begin{itemize}
-			\item 1
-			\item 2
-		\end{itemize}
-	\end{column}
-	\hfill
-	\begin{column}{0.45\textwidth}
-		\begin{itemize}
-			\item 3
-			\item 4
-		\end{itemize}
-	\end{column}
-\end{columns}
+\begin{frame}[c]
+\frametitle{Conclusion}
+\begin{itemize}
+    \item We successfully modeled and simulated CMS computing jobs for GridKa
+    \begin{itemize}
+        \item With automated model creation 
+        \item From measured job performance requirements    
+    \end{itemize}
+
+    \item First results indicate that Palladio can be useful as a tool to optimize HEP grid infrastructure
+    \vspace{2em}    
+    \item Outlook
+    \begin{itemize}
+        \item Expand simulation to model multiple HEP centers
+        \item Evaluate multiple load-balancing strategies
+    \end{itemize}
+\end{itemize}
+
 \end{frame}
 \end{document}
