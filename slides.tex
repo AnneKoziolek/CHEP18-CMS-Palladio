@@ -430,33 +430,39 @@
 \frametitle{Validation}
 \begin{columns}
 	\begin{column}{0.45\textwidth}
+		\begin{itemize}
+			\item  Simulation of CMS computing jobs at GridKa for one week. 
+				Based on measured data from April 2018.
+			\item Metrics
+		    \begin{itemize}
+		    	\item Throughput
+		    	\item Share of job types
+		    	\item CPU efficiency
+		    \end{itemize}
+		\end{itemize}
 		\begin{center}
-		\vspace{-21ex}
-		\includegraphics[width=\textwidth]{Bilder/durchsatz}
-		\begin{flushleft}
- 		{\scriptsize Closed loop validation: Simulation of CMS computing jobs at GridKa for one week. \\
- 		Based on measured data from April 2018.}
- 		\end{flushleft}
 		\end{center}
 	\end{column}
-	\begin{column}{0.5\textwidth}
-		\includegraphics[width=\textwidth]{Bilder/anteil-simuliert}
-		\includegraphics[width=\textwidth]{Bilder/anteil-gemessen}
+	\begin{column}{0.45\textwidth}
+				
+		\includegraphics[width=\textwidth]{Bilder/durchsatz}
+		\includegraphics[width=\textwidth]{Bilder/shares}
+
 	\end{column}
 \end{columns}
 \end{frame}
 
-\begin{frame}
-\frametitle{Results}
-\includegraphics[scale=0.42]{Bilder/utilization}
-\end{frame}
+%\begin{frame}
+%\frametitle{Results}
+%\includegraphics[scale=0.42]{Bilder/utilization}
+%\end{frame}
 
-\note[itemize]{
-	\item Required time to simulate one week is 12min.
-	\item Validated with throughput and share of completed jobs per type
-	\item Not yet validated with measured utilization.
-	\item data from 2018-01tomid02
-}
+%\note[itemize]{
+%	\item Required time to simulate one week is 12min.
+%	\item Validated with throughput and share of completed jobs per type
+%	\item Not yet validated with measured utilization.
+%	\item data from 2018-01tomid02
+%}
 
 \section*{Outlook}
 \begin{frame}[c]
