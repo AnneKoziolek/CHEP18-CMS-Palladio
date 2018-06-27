@@ -130,15 +130,20 @@
 \title[]{Modeling and Simulation of Load Balancing Strategies for Computing in High Energy Physics}
 \subtitle{Karlsruhe Institute of Technology (KIT)}
 
-\subtitle[Ren\'e Caspart]{\underline{\smash{Ren\'e Caspart}}, Patrick Firnkes, Manuel Giffels, Anne Koziolek, G\"unter Quast, Ralf Reussner, Maximilian Stemmer-Grabow}
+\subtitle[Ren\'e Caspart]{\underline{\smash{Ren\'e Caspart}}${}^{1}$, Patrick Firnkes${}^{2}$, Manuel Giffels${}^{1}$, Anne Koziolek${}^{2}$, G\"unter Quast${}^{1}$, Ralf Reussner${}^{2}$, Maximilian Stemmer-Grabow$^{2}$}
 
 \AuthorTitleSep{\relax}
 
-\institute[]{KARLSRUHE INSTITUTE OF TECHNOLOGY (KIT)}
+\institute[]{Karlsruhe Institute of Technology (KIT), \inst{1} Institute for Experimental Particle Physics (ETP), \inst{2} Institute for Program Structures and Data Organization (IPD)}
 
 \TitleImage[width=\titleimagewd]{Bilder/KIT-Titel}
 
 \newlength{\tmplen}
+
+
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
 
 \begin{document}
 
@@ -170,45 +175,43 @@
         \begin{column}{0.45\textwidth}
             \begin{itemize}
                 \item Flat computing budget model does not cover future needs for computing resources
-                \item Need to find ways to deal with this lack of resources
-                \begin{itemize}
-                    \item Addition of non-HEP specific resources
-                    \item Improvement of used algorithms and software
-                    \item Improvement of utilization of computing centers
-                \end{itemize}
+                \item In the future increased addition of non-HEP specific resources
             \end{itemize}
+            \begin{center}
+                \vskip -2ex
+                \includegraphics[width=\textwidth]{Bilder/CPU_resources_budget}
+                \tiny{https://arxiv.org/abs/1712.06982}
+            \end{center}
         \end{column}
         \hfill
         \begin{column}{0.5\textwidth}
-            \begin{center}
-                \includegraphics[width=\textwidth]{Bilder/CPU_resources_budget}
-                \hspace{-2cm}
-                \tiny{https://arxiv.org/abs/1712.06982}
-                %\includegraphics[width=\textwidth]{Images/cpuefficiency_T1s_allactivities}
-            \end{center}
+            \begin{itemize}
+                \item Computing resources used for HEP will be increasingly heterogeneous
+                \item Already now the case for centers running user analysis
+                \begin{itemize}
+                    \item Tier 2, Tier 3 and institute clusters
+                    \item Addition of cloud resources like HnSciCloud and AWS
+                \end{itemize}
+                \item Different job types and mixtures optimal for each resource
+            \end{itemize}
         \end{column}
     \end{columns}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Current Status}
+    \frametitle{Scheduling as a key component}
     \begin{columns}
         \begin{column}{0.45\textwidth}
             \begin{itemize}
-                \item Efficiency of utilization of grid sites not optimal
-                \item We want to address two effects 
-                \begin{itemize}
-                    \item Impact on efficiency due to site limitations (e.g. network or storage bandwidth)
-                    \item Impact on efficiency due to scheduling overhead
-                \end{itemize}
+                \item Already now efficient scheduling for jobs is a challenge
+                \item This will become even more important with heterogeneous resources in the future
+                \item We need to find ways to simulate the utilization of these resources with different scheduling approaches
             \end{itemize}
         \end{column}
         \hfill
         \begin{column}{0.5\textwidth}
             \begin{center}
-                \vspace{-4ex}
-                \includegraphics[width=\textwidth]{Bilder/Eff_T0_T1}
-                \vspace{2ex}
+                \vspace{4ex}
                 \includegraphics[width=\textwidth]{Bilder/CPU_eff_gridKa}
             \end{center}
         \end{column}
@@ -478,8 +481,8 @@
     \vspace{2em}    
     \item Outlook
     \begin{itemize}
-        \item Expand simulation to model multiple HEP centers
-        \item Evaluate multiple load-balancing strategies
+        \item We plan to extend our model to include heterogeneous computing resources
+        \item Will allow to evaluate the efficiency of different scheduling strategies for these resources
     \end{itemize}
 \end{itemize}
 
