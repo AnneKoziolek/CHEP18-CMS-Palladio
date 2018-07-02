@@ -219,11 +219,11 @@
 \end{frame}
 
 
-\section*{Concept \& Proof of Work}
+\section*{Concept \& Proof of Concept}
 \begin{frame}
 \frametitle{Approach}
 
-    Create simulation for WLCG to optimize resource usage
+    Create simulation to optimize resource usage and cope with heterogeneity of grid
     \vspace{1em}
 	\begin{itemize}
 		\item Evaluate load balancing strategies
@@ -235,9 +235,9 @@
     \vspace{0.2em}
 			\begin{itemize}
 			\item Created simulation for CMS computing jobs at GridKa
-			\item Used \alert{Palladio Simulator} as foundation
 			\item Implemented automatic parameter extraction and model creation
 			\item Validated first results
+			\item Used \alert{Palladio Simulator} as foundation
 			\end{itemize}
 	\end{exampleblock}
 
@@ -265,23 +265,18 @@
 	\begin{column}{0.45\textwidth}
 		\begin{itemize}
 					\setlength\itemsep{0.2em}
-			\item Enables performance predictions for design decisions
-			\item Event-based model driven software architecture simulator
-			\item Model on abstract level: Express resource needs of jobs as statistical distributions
-			\item Extended for simulation of Cloud Computing/HPC
+			\item Performance predictions for design decisions
+			\item Software architecture simulator
+			\item Abstract level: Express resource needs of jobs as statistical distributions
+			\item Successfully applied for
 			\begin{itemize}
-				\item Architectural Templates\\
-				{\scriptsize modeling large systems efficiently}
-				\item SimuLizar \\
-				{\scriptsize self-adaptive systems}
+				\item Solving industrial problems
+				\item Optimizing cloud/HEP infrastructure (chemical computing)
 			\end{itemize}
 		\end{itemize}
 	\end{column}
-	\hfill
-	\begin{column}{0.45\textwidth}
-		\begin{itemize}
-			\item Successfully used for optimizing cloud infrastructure as part of the CACTOS project
-		\end{itemize}
+	\begin{column}{0.55\textwidth}
+		    \vspace{4ex}
 			\begin{center}
 				\includegraphics[width=\textwidth]{Bilder/palladio}
 				\tiny{Graphical Interface of the Palladio Eclipse Plugin}
@@ -295,8 +290,12 @@
 \item Developed at KIT, FZI and University of Paderborn
 \item Palladio should be used to evaluate different load balancing strategies or other design decisions (like infrastructure improvements).
 
+\item Cloud/HEP as part of the CACTOS project
+
 \item Architectural Templates: Enables one to efficiently model large systems (E.g. instead of modeling 1000 servers manuelly, model one server and architectural templates duplicates this server 1000 times).
 \item SimuLizar: Simulate self adapting systems
+
+
 }
 
 \section*{Model Computing Jobs}
@@ -306,7 +305,7 @@
 	\begin{column}{0.45\textwidth}
 		\begin{itemize}
 		\setlength\itemsep{1em}
-			\item Model each kind of computing job with its resource requirements
+			\item Model each kind of computing job with its resource usage
 				\begin{itemize}
 					\item CPU \& I/O
 					\item Required job slots
@@ -323,6 +322,7 @@
 	\begin{column}{0.45\textwidth}
 		\begin{center}
 			\includegraphics[width=\textwidth]{Bilder/component}
+			\tiny{Screenshot: Computing job component in Palladio}
 		\end{center}
 	\end{column}
 \end{columns}
@@ -358,9 +358,11 @@
 			\end{itemize}
 		\end{itemize}
 	\end{column}
-	\begin{column}{0.45\textwidth}
+	\hfill
+	\begin{column}{0.33\textwidth}
 		\begin{center}
 			\includegraphics[width=\textwidth]{Bilder/model-container}
+			\tiny{Screenshot: Resource container in Palladio}
 		\end{center}
 	\end{column}
 \end{columns}
@@ -446,6 +448,7 @@
 		    	\item Share of job types
 		    	\item CPU efficiency
 		    \end{itemize}
+	    	\item High accuracy
 		\end{itemize}
 		\begin{center}
 		\end{center}
@@ -459,17 +462,12 @@
 \end{columns}
 \end{frame}
 
-%\begin{frame}
-%\frametitle{Results}
-%\includegraphics[scale=0.42]{Bilder/utilization}
-%\end{frame}
 
-%\note[itemize]{
-%	\item Required time to simulate one week is 12min.
-%	\item Validated with throughput and share of completed jobs per type
-%	\item Not yet validated with measured utilization.
-%	\item data from 2018-01tomid02
-%}
+\note[itemize]{
+	\item Required time to simulate one week is 18min.
+	\item To simulate the effect of pilot draining a delay was introduced.
+	Each job waits after it finished until a new job starts, to match the measured throughput.
+}
 
 \section*{Outlook}
 \begin{frame}[c]
