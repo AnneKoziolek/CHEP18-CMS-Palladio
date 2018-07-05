@@ -175,7 +175,7 @@
         \begin{column}{0.45\textwidth}
             \begin{itemize}
                 \item Flat computing budget model does not cover future needs for computing resources
-                \item In the future increased addition of non-HEP specific resources
+                %\item In the future increased addition of non-HEP specific resources
             \end{itemize}
             \begin{center}
                 \vskip -2ex
@@ -186,8 +186,8 @@
         \hfill
         \begin{column}{0.5\textwidth}
             \begin{itemize}
-                \item Computing resources used for HEP will be increasingly heterogeneous
-                \item Already now the case for centers running user analysis
+                \item Computing resources for user jobs in HEP will be increasingly distributed and heterogeneous systems
+                \item This trend can already be seen
                 \begin{itemize}
                     \item Tier 2, Tier 3 and institute clusters
                     \item Addition of cloud resources like HnSciCloud and AWS
@@ -203,8 +203,8 @@
     \begin{columns}
         \begin{column}{0.45\textwidth}
             \begin{itemize}
-                \item Already now efficient scheduling for jobs is a challenge
-                \item This will become even more important with heterogeneous resources in the future
+                \item Already for the current resources efficient scheduling for jobs is a challenge
+                \item This will become even more important for distributed heterogeneous resources in the future
                 \item We need to find ways to simulate the utilization of these resources with different scheduling approaches
             \end{itemize}
         \end{column}
@@ -223,23 +223,22 @@
 \begin{frame}
 \frametitle{Approach}
 
-    Create simulation to optimize resource usage and cope with heterogeneity of grid
     \vspace{1em}
 	\begin{itemize}
-		\item Evaluate load balancing strategies
-		\item Evaluate grid infrastructure improvements
-		\item Evaluate scheduling decisions
+        \item Simulate the utilization of commuting centers using different scheduling approaches
+        \begin{itemize}
+            \item Need to model workflows and resources
+            \item Need to implement different scheduling approaches
+            \item Check the effect of these approaches on the utilization
+        \end{itemize}
+        \item Make use of the \alert{Palladio} Simulator
+        \begin{itemize}
+            \item Established tool in the computer science community
+            \item Actively developed and used by computer scientists at KIT
+            \item Extended to model jobs and available resources at computing centers
+        \end{itemize}
+        \item As a proof of concept simulate CMS workflows at the Tier 1 center GridKa
     \end{itemize}
-    \vfill
-    \begin{exampleblock}{Proof of Concept}
-    \vspace{0.2em}
-			\begin{itemize}
-			\item Created simulation for CMS computing jobs at GridKa
-			\item Implemented automatic parameter extraction and model creation
-			\item Validated first results
-			\item Used \alert{Palladio Simulator} as foundation
-			\end{itemize}
-	\end{exampleblock}
 
     
 %\begin{columns}
@@ -267,12 +266,12 @@
 					\setlength\itemsep{0.2em}
 			\item Performance predictions for design decisions
 			\item Software architecture simulator
-			\item Abstract level: Express resource needs of jobs as statistical distributions
 			\item Successfully applied for
 			\begin{itemize}
 				\item Solving industrial problems
-				\item Optimizing cloud/HEP infrastructure (chemical computing)
+				\item Optimizing cloud infrastructure (chemical computing)
 			\end{itemize}
+			\item Abstract level: Express resource needs of jobs as statistical distributions
 		\end{itemize}
 	\end{column}
 	\begin{column}{0.55\textwidth}
@@ -345,8 +344,8 @@
 			\item Model each type of computing node
 			\begin{itemize}
 				\item Number and processing speed of cores
-				\item Processing speed of I/O
-				\item Number of job slots
+				\item I/O capabilities
+				%\item Number of job slots
 				\item Number of instances of node
 			\end{itemize}
 			
@@ -473,18 +472,20 @@
 \begin{frame}[c]
 \frametitle{Conclusion}
 \begin{itemize}
-    \item We believe computing resources for user analyses will become more distributed and more heterogeneous in the future
-    \item Scheduling will be a key component for the efficient usage
-    \item In cooperation with computer scientists at KIT we plan to use the tool Palladio to model and evaluate different scheduling strategies
-    \item A proof of concept for the usage of Palladio was performed simulating CMS workflows at the T1 center GridKa
+    \item Computing resources for user analyses will become \alert{increasingly distributed and heterogeneous} in the future
+    \item Scheduling will be a key component for the \alert{efficient usage}
+    \item In cooperation with computer scientists at KIT use the tool Palladio to \alert{model and evaluate different scheduling strategies}
+    \item A \alert{proof of concept} for the usage of Palladio was performed simulating CMS workflows at the Tier 1 center GridKa
     \begin{itemize}
-        \item Fully automated model creation based on CMS workflow monitoring and data from GridKa
+        \item Fully automated model creation based on data from CMS workflow monitoring and GridKa
         \item We were able to successfully model the current situation at GridKa for key metrics
-        \item Will investigate how to model further metrics
+        \item Investigate how to model further metrics
     \end{itemize}
-    \item We plan to extend the current model to be able to include heterogeneous computing resources
+    \item Extend the current model to be able to \alert{include distributed heterogeneous computing resources}
 
 \end{itemize}
 
 \end{frame}
+
+
 \end{document}
