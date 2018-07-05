@@ -225,7 +225,7 @@
 
     \vspace{1em}
 	\begin{itemize}
-        \item Simulate the utilization of commuting centers using different scheduling approaches
+        \item Simulate the utilization of computing centers using different scheduling approaches
         \begin{itemize}
             \item Need to model workflows and resources
             \item Need to implement different scheduling approaches
@@ -310,12 +310,13 @@
 					\item Required job slots
 					\item Number of events
 				\end{itemize}
-			\item Model load balancing strategy
-				\begin{itemize}
-					\item First fit search based on available job slots
-					\item Easily modifiable to evaluate new strategies
-				\end{itemize}
+			\item Model high load on system
+			\begin{itemize}
+				\item Closed workload
+				\item Enough jobs to guarantee that systems never idles
+				\item Each job type has configurable share of load
 			\end{itemize}
+        \end{itemize}
 	\end{column}
 	\hfill
 	\begin{column}{0.45\textwidth}
@@ -348,13 +349,12 @@
 				%\item Number of job slots
 				\item Number of instances of node
 			\end{itemize}
+			\item Model load balancing strategy
+				\begin{itemize}
+					\item First fit search based on available job slots
+					\item Easily modifiable to evaluate new strategies
+				\end{itemize}
 			
-			\item Model high load on system
-			\begin{itemize}
-				\item Closed workload
-				\item Enough jobs to guarantee that systems never idles
-				\item Each job type has configurable share of load
-			\end{itemize}
 		\end{itemize}
 	\end{column}
 	\hfill
@@ -478,7 +478,7 @@
     \item A \alert{proof of concept} for the usage of Palladio was performed simulating CMS workflows at the Tier 1 center GridKa
     \begin{itemize}
         \item Fully automated model creation based on data from CMS workflow monitoring and GridKa
-        \item We were able to successfully model the current situation at GridKa for key metrics
+        \item We were able to successfully model the situation at GridKa for key metrics
         \item Investigate how to model further metrics
     \end{itemize}
     \item Extend the current model to be able to \alert{include distributed heterogeneous computing resources}
