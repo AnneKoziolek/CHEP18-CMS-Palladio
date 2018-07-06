@@ -127,12 +127,15 @@
       \usebeamertemplate{block begin}}
     {\par\usebeamertemplate{block end}\end{actionenv}}
 
-\title[]{Modeling and Simulation of Load Balancing Strategies for Computing in High Energy Physics}
+\title[CHEP 2018\ \ --\ \ Ren\'e Caspart (ETP)\ \ --\ \ Modeling and Simulation of Load Balancing Strategies for Computing in High Energy Physics]{Modeling and Simulation of Load Balancing Strategies for Computing in High Energy Physics}
 \subtitle{Karlsruhe Institute of Technology (KIT)}
 
 \subtitle[Ren\'e Caspart]{\underline{\smash{Ren\'e Caspart}}${}^{1}$, Patrick Firnkes${}^{2}$, Manuel Giffels${}^{1}$, Anne Koziolek${}^{2}$, G\"unter Quast${}^{1}$, Ralf Reussner${}^{2}$, Maximilian Stemmer-Grabow$^{2}$}
 
 \AuthorTitleSep{\relax}
+\FooterInstfraction{0}
+\FooterAuthorfraction{0.0}
+\FooterTitlefraction{1.0}
 
 \institute[]{Karlsruhe Institute of Technology (KIT), \inst{1} Institute for Experimental Particle Physics (ETP), \inst{2} Institute for Program Structures and Data Organization (IPD)}
 
@@ -175,7 +178,7 @@
         \begin{column}{0.45\textwidth}
             \begin{itemize}
                 \item Flat computing budget model does not cover future needs for computing resources
-                %\item In the future increased addition of non-HEP specific resources
+                \item Most efficient usage is mandatory
             \end{itemize}
             \begin{center}
                 \vskip -2ex
@@ -186,13 +189,17 @@
         \hfill
         \begin{column}{0.5\textwidth}
             \begin{itemize}
-                \item Computing resources for user jobs in HEP will be increasingly distributed and heterogeneous systems
-                \item This trend can already be seen
+                \item Computing resources for user jobs in HEP will be increasingly distributed and heterogeneous
                 \begin{itemize}
-                    \item Tier 2, Tier 3 and institute clusters
-                    \item Addition of cloud resources like HnSciCloud and AWS
+                    \item Addition of cloud resources like HNSciCloud and AWS
+                    \item Institute clusters and Tier 3 centers
                 \end{itemize}
                 \item Different job types and mixtures optimal for each resource
+                \item Data placement will be more dynamic
+                \begin{itemize}
+                    \item Fewer centers hosting data
+                    \item Leads to increase remote access
+                \end{itemize}
             \end{itemize}
         \end{column}
     \end{columns}
@@ -204,8 +211,8 @@
         \begin{column}{0.45\textwidth}
             \begin{itemize}
                 \item Already for the current resources efficient scheduling for jobs is a challenge
-                \item This will become even more important for distributed heterogeneous resources in the future
-                \item We need to find ways to simulate the utilization of these resources with different scheduling approaches
+                \item Even more important for distributed heterogeneous resources in the future
+                \item Need to find ways to simulate the usage efficiency of these resources with different scheduling approaches
             \end{itemize}
         \end{column}
         \hfill
@@ -225,13 +232,13 @@
 
     \vspace{1em}
 	\begin{itemize}
-        \item Simulate the utilization of computing centers using different scheduling approaches
+        \item Simulate these resources using different scheduling approaches
         \begin{itemize}
             \item Need to model workflows and resources
             \item Need to implement different scheduling approaches
-            \item Check the effect of these approaches on the utilization
+            \item Check the effect of these approaches on the usage efficiency
         \end{itemize}
-        \item Make use of the \alert{Palladio} Simulator
+        \item Make use of the \alert{Palladio Simulator}
         \begin{itemize}
             \item Established tool in the computer science community
             \item Actively developed and used by computer scientists at KIT
@@ -271,18 +278,21 @@
 				\item Solving industrial problems
 				\item Optimizing cloud infrastructure (chemical computing)
 			\end{itemize}
-			\item Abstract level: Express resource needs of jobs as statistical distributions
 		\end{itemize}
 	\end{column}
 	\begin{column}{0.55\textwidth}
-		    \vspace{4ex}
+		    \vspace{2ex}
 			\begin{center}
 				\includegraphics[width=\textwidth]{Bilder/palladio}
 				\tiny{Graphical Interface of the Palladio Eclipse Plugin}
 			\end{center}
+		    \vspace{2ex}
 
 	\end{column}
 \end{columns}
+\begin{itemize}
+    \item Abstract models: Express resource needs as statistical distributions
+\end{itemize}
 \end{frame}
 
 \note[itemize]{
@@ -300,7 +310,7 @@
 \section*{Model Computing Jobs}
 \begin{frame}
 \frametitle{Model Computing Jobs}
-\begin{columns}
+    \begin{columns}[onlytextwidth]
 	\begin{column}{0.45\textwidth}
 		\begin{itemize}
 		\setlength\itemsep{1em}
@@ -319,8 +329,9 @@
         \end{itemize}
 	\end{column}
 	\hfill
-	\begin{column}{0.45\textwidth}
+	\begin{column}{0.5\textwidth}
 		\begin{center}
+            \vspace{-2ex}
 			\includegraphics[width=\textwidth]{Bilder/component}
 			\tiny{Screenshot: Computing job component in Palladio}
 		\end{center}
@@ -358,8 +369,9 @@
 		\end{itemize}
 	\end{column}
 	\hfill
-	\begin{column}{0.33\textwidth}
+	\begin{column}{0.36\textwidth}
 		\begin{center}
+            \vspace{-3ex}
 			\includegraphics[width=\textwidth]{Bilder/model-container}
 			\tiny{Screenshot: Resource container in Palladio}
 		\end{center}
@@ -433,23 +445,27 @@
 
 
 
+
 \section*{Validation}
 \begin{frame}
 \frametitle{Validation}
 \begin{columns}
 	\begin{column}{0.5\textwidth}
         \begin{itemize}
-			\item Simulation of CMS computing jobs at GridKa for one week.
+			\item Simulation of CMS computing jobs at GridKa for one week
+                \begin{itemize}
+                    \item Run in 18 minutes on a laptop
+                \end{itemize}
 			\item Metrics
             \begin{itemize}
                 \item Throughput
                 \item Share of job types
                 \item CPU efficiency
-		 \end{itemize}
+            \end{itemize}
 		\end{itemize}
 
 			\begin{figure}
-				  \vspace{-2.3ex}
+				  \vspace{-0.5ex}
 				\begin{center}
 					\begin{tikzpicture}[scale = 0.45]
 					\begin{axis}[
@@ -1093,12 +1109,24 @@
     \begin{itemize}
         \item Fully automated model creation based on data from CMS workflow monitoring and GridKa
         \item We were able to successfully model the situation at GridKa for key metrics
-        \item Investigate how to model further metrics
+        \item Investigate modeling for further metrics
     \end{itemize}
-    \item Extend the current model to be able to \alert{include distributed heterogeneous computing resources}
 
 \end{itemize}
+\end{frame}
 
+\begin{frame}[c]
+\frametitle{Outlook}
+\begin{itemize}
+    \item Extend the current model to be able to simulate heterogeneous and distributed computing resources
+    \item Include modeling of challenges due to data-locality and remote data-access
+    \item Use the result of these models as an input for
+    \begin{itemize}
+        \item Design of future scheduling systems
+        \item Inclusion at run-time to optimize scheduling
+    \end{itemize}
+
+\end{itemize}
 \end{frame}
 
 
