@@ -438,15 +438,14 @@
 \frametitle{Validation}
 \begin{columns}
 	\begin{column}{0.5\textwidth}
-		\begin{itemize}
+        \begin{itemize}
 			\item Simulation of CMS computing jobs at GridKa for one week.
 			\item Metrics
-		    \begin{itemize}
-		    	\item Throughput
-		    	\item Share of job types
-		    	\item CPU utilization
-		    \end{itemize}
-	    	\item Investigating the deviation in simulated CPU utilization
+            \begin{itemize}
+                \item Throughput
+                \item Share of job types
+                \item CPU efficiency
+		 \end{itemize}
 		\end{itemize}
 
 			\begin{figure}
@@ -454,9 +453,11 @@
 				\begin{center}
 					\begin{tikzpicture}[scale = 0.45]
 					\begin{axis}[
-					xlabel={Time in s},
-					ylabel={Total CPU Utilization},
-					ymin=0, ymax=1
+					xlabel={Time / s},
+					ylabel={Total CPU Time / Walltime},
+					ymin=0, ymax=1,
+					xmin=0, xmax=604800,
+					legend cell align={left},
 					]
 					\addplot[color=red] coordinates {
 						(0, 0.61)			
@@ -1056,7 +1057,7 @@
 					(604000,0.357975119833)
 					
 					};
-					\addlegendentry{Measured (weekly aggregate)};
+					\addlegendentry{Measured (average)};
 					\addlegendentry{Simulated};
 					\end{axis}
 					\end{tikzpicture}
