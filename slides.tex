@@ -446,7 +446,7 @@
 		    	\item Share of job types
 		    	\item CPU utilization
 		    \end{itemize}
-	    	\item Inaccuracies in utilization due missing jobs in data
+	    	\item Investigating the deviation in simulated CPU utilization
 		\end{itemize}
 
 			\begin{figure}
@@ -454,7 +454,7 @@
 				\begin{center}
 					\begin{tikzpicture}[scale = 0.45]
 					\begin{axis}[
-					xlabel={Time},
+					xlabel={Time in s},
 					ylabel={Total CPU Utilization},
 					ymin=0, ymax=1
 					]
@@ -1056,7 +1056,7 @@
 					(604000,0.357975119833)
 					
 					};
-					\addlegendentry{Measured};
+					\addlegendentry{Measured (weekly aggregate)};
 					\addlegendentry{Simulated};
 					\end{axis}
 					\end{tikzpicture}
@@ -1075,6 +1075,7 @@
 
 \note[itemize]{
 	\item Based on measured data from April 2018.
+	\item inaccuracise probably due missing jobs in data
 	\item Required time to simulate one week is 18min.
 	\item To simulate the effect of pilot draining a delay was introduced.
 	Each job waits after it finished until a new job starts, to match the measured throughput.
