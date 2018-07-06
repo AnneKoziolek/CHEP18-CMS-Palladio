@@ -267,7 +267,7 @@
 \section*{Palladio Simulator}
 \begin{frame}
 \frametitle{Palladio Simulator}
-\begin{columns}
+\begin{columns}[onlytextwidth]
 	\begin{column}{0.45\textwidth}
 		\begin{itemize}
 					\setlength\itemsep{0.2em}
@@ -280,8 +280,7 @@
 			\end{itemize}
 		\end{itemize}
 	\end{column}
-	\begin{column}{0.55\textwidth}
-		    \vspace{2ex}
+	\begin{column}{0.57\textwidth}
 			\begin{center}
 				\includegraphics[width=\textwidth]{Bilder/palladio}
 				\tiny{Graphical Interface of the Palladio Eclipse Plugin}
@@ -454,7 +453,7 @@
         \begin{itemize}
 			\item Simulation of CMS computing jobs at GridKa for one week
                 \begin{itemize}
-                    \item Run in 18 minutes on a laptop
+                    \item Ran in 18 minutes on a laptop
                 \end{itemize}
 			\item Metrics
             \begin{itemize}
@@ -1118,13 +1117,10 @@
 \begin{frame}[c]
 \frametitle{Outlook}
 \begin{itemize}
-    \item Extend the current model to be able to simulate heterogeneous and distributed computing resources
-    \item Include modeling of challenges due to data-locality and remote data-access
-    \item Use the result of these models as an input for
-    \begin{itemize}
-        \item Design of future scheduling systems
-        \item Inclusion at run-time to optimize scheduling
-    \end{itemize}
+    \item Extend the current model to be able to \alert{simulate heterogeneous and distributed computing resources}
+    \item Include modeling of challenges due to \alert{remote data access and caching mechanism}
+    \item Use the result of these models as an \alert{input for the design of future scheduling systems}
+    \item \alert{Optimize scheduling decisions} using modeling results at run-time
 
 \end{itemize}
 \end{frame}
