@@ -1,10 +1,9 @@
 *.aux
-*.pdf
 *.log
 *.nav
 *.out
 *.snm
 *.toc
-!Bilder/*.pdf
-
+slides.pdf
+paper.pdf
 *.gz

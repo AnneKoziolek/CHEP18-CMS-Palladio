@@ -1,0 +1,1122 @@
+% !TeX document-id = {5ae73978-d7a8-4a15-a272-3b0597ff2241}
+% This template has been tested with LLNCS DOCUMENT CLASS -- version 2.19 (04-Sep-2017)
+
+% !TeX spellcheck = en-US
+% !TeX encoding = utf8
+% !TeX program = pdflatex
+% !BIB program = bibtex
+% -*- coding:utf-8 mod:LaTeX -*-
+
+%"runningheads" enables:
+%  - page number on page 2 onwards
+%  - title/authors on even/odd pages
+%This is good for other readers to enable proper archiving among other papers and pointing to
+%content. Even if the title page states the title, when printed and stored in a folder, when
+%blindly opening the folder, one could hit not the title page, but an arbitrary page. Therefore,
+%it is good to have title printed on the pages, too.
+\documentclass[runningheads,a4paper]{llncs}[2017/09/04]
+
+%% If you need packages for other papers,
+%% START COPYING HERE
+
+% Set English as language and allow to write hyphenated"=words
+%
+% Even though `american`, `english` and `USenglish` are synonyms for babel package (according to https://tex.stackexchange.com/questions/12775/babel-english-american-usenglish), the llncs document class is prepared to avoid the overriding of certain names (such as "Abstract." -> "Abstract" or "Fig." -> "Figure") when using `english`, but not when using the other 2.
+% english has to go last to set it as default language
+\usepackage[ngerman,english]{babel}
+%Hint by http://tex.stackexchange.com/a/321066/9075 -> enable "= as dashes
+\addto\extrasenglish{\languageshorthands{ngerman}\useshorthands{"}}
+
+\usepackage{ifluatex}
+\ifluatex
+  \usepackage{fontspec}
+  \usepackage[english]{selnolig}
+\fi
+
+\iftrue % use default-font
+  \ifluatex
+    % use the better (sharper, ...) Latin Modern variant of Computer Modern
+    \setmainfont{Latin Modern Roman}
+    \setsansfont{Latin Modern Sans}
+    \setmonofont{Latin Modern Mono} % "variable=false"
+    %\setmonofont{Latin Modern Mono Prop} % "variable=true"
+  \else
+    % better font, similar to the default springer font
+    % cfr-lm is preferred over lmodern. Reasoning at http://tex.stackexchange.com/a/247543/9075
+    \usepackage[%
+      rm={oldstyle=false,proportional=true},%
+      sf={oldstyle=false,proportional=true},%
+      tt={oldstyle=false,proportional=true,variable=false},%
+      qt=false%
+    ]{cfr-lm}
+  \fi
+\else
+  % In case more space is needed, it is accepted to use Times New Roman
+  \ifluatex
+    \setmainfont{TeX Gyre Termes}
+    \setsansfont[Scale=.9]{TeX Gyre Heros}
+    % newtxtt looks good with times, but no equivalent for lualatex found,
+    % therefore tried to replace with inconsolata.
+    % However, inconsolata does not look good in the context of LNCS ...
+    %\setmonofont[StylisticSet={1,3},Scale=.9]{inconsolata}
+    % ... thus, we use the good old Latin Modern Mono font for source code.
+    \setmonofont{Latin Modern Mono} % "variable=false"
+    %\setmonofont{Latin Modern Mono Prop} % "variable=true"
+  \else
+    % overwrite cmodern with the Times variant
+    \usepackage{newtxtext}
+    \usepackage{newtxmath}
+    \usepackage[zerostyle=b,scaled=.9]{newtxtt}
+  \fi
+\fi
+
+\ifluatex
+\else
+  % fontenc and inputenc are not required when using lualatex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc} %support umlauts in the input
+\fi
+
+\usepackage{graphicx}
+
+% backticks (`) are rendered as such in verbatim environment. See https://tex.stackexchange.com/a/341057/9075 for details.
+\usepackage{upquote}
+
+% Nicer tables (\toprule, \midrule, \bottomrule - see example)
+\usepackage{booktabs}
+
+%extended enumerate, such as \begin{compactenum}
+\usepackage{paralist}
+
+%put figures inside a text
+%\usepackage{picins}
+%use
+%\piccaptioninside
+%\piccaption{...}
+%\parpic[r]{\includegraphics ...}
+%Text...
+
+% For easy quotations: \enquote{text}
+% This package is very smart when nesting is applied, otherwise textcmds (see below) provides a shorter command
+\usepackage{csquotes}
+
+% For even easier quotations: \qq{text}
+\usepackage{textcmds}
+
+%enable margin kerning
+\RequirePackage[%
+  babel,%
+  final,%
+  expansion=alltext,%
+  protrusion=alltext-nott]{microtype}%
+% \texttt{test -- test} keeps the "--" as "--" (and does not convert it to an en dash)
+\DisableLigatures{encoding = T1, family = tt* }
+
+%tweak \url{...}
+\usepackage{url}
+%\urlstyle{same}
+%improve wrapping of URLs - hint by http://tex.stackexchange.com/a/10419/9075
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+%nicer // - solution by http://tex.stackexchange.com/a/98470/9075
+%DO NOT ACTIVATE -> prevents line breaks
+%\makeatletter
+%\def\Url@twoslashes{\mathchar`\/\@ifnextchar/{\kern-.2em}{}}
+%\g@addto@macro\UrlSpecials{\do\/{\Url@twoslashes}}
+%\makeatother
+
+% Diagonal lines in a table - http://tex.stackexchange.com/questions/17745/diagonal-lines-in-table-cell
+% Slashbox is not available in texlive (due to licensing) and also gives bad results. This, we use diagbox
+%\usepackage{diagbox}
+
+% Required for package pdfcomment later
+\usepackage{xcolor}
+
+% For listings
+\usepackage{listings}
+\lstset{%
+  basicstyle=\ttfamily,%
+  columns=fixed,%
+  basewidth=.5em,%
+  xleftmargin=0.5cm,%
+  captionpos=b}%
+\renewcommand{\lstlistingname}{List.}
+% Fix counter as described at https://tex.stackexchange.com/a/28334/9075
+\usepackage{chngcntr}
+\AtBeginDocument{\counterwithout{lstlisting}{section}}
+
+% Enable nice comments
+\usepackage{pdfcomment}
+%
+\newcommand{\commentontext}[2]{\colorbox{yellow!60}{#1}\pdfcomment[color={0.234 0.867 0.211},hoffset=-6pt,voffset=10pt,opacity=0.5]{#2}}
+\newcommand{\commentatside}[1]{\pdfcomment[color={0.045 0.278 0.643},icon=Note]{#1}}
+%
+% Compatibality with packages todo, easy-todo, todonotes
+\newcommand{\todo}[1]{\commentatside{#1}}
+% Compatiblity with package fixmetodonotes
+\newcommand{\TODO}[1]{\commentatside{#1}}
+
+% Bibliopgraphy enhancements
+%  - enable \cite[prenote][]{ref}
+%  - enable \cite{ref1,ref2}
+% Alternative: \usepackage{cite}, which enables \cite{ref1, ref2} only (otherwise: Error message: "White space in argument")
+
+% Doc: http://texdoc.net/natbib
+\usepackage[%
+  square,        % for square brackets
+  comma,         % use commas as separators
+  numbers,       % for numerical citations;
+%  sort,          % orders multiple citations into the sequence in which they appear in the list of references;
+  sort&compress, % as sort but in addition multiple numerical citations
+                 % are compressed if possible (as 3-6, 15);
+]{natbib}
+% In the bibliography, references have to be formatted as 1., 2., ... not [1], [2], ...
+\renewcommand{\bibnumfmt}[1]{#1.}
+
+\ifluatex
+  % does not work when using luatex
+  % see: https://tex.stackexchange.com/q/419288/9075
+\else
+  % Prepare more space-saving rendering of the bibliography
+  % Source: https://tex.stackexchange.com/a/280936/9075
+  \SetExpansion
+  [ context = sloppy,
+    stretch = 30,
+    shrink = 60,
+    step = 5 ]
+  { encoding = {OT1,T1,TS1} }
+  { }
+\fi
+
+% Put footnotes below floats
+% Source: https://tex.stackexchange.com/a/32993/9075
+\usepackage{stfloats}
+\fnbelowfloat
+
+% Enable that parameters of \cref{}, \ref{}, \cite{}, ... are linked so that a reader can click on the number an jump to the target in the document
+\usepackage{hyperref}
+% Enable hyperref without colors and without bookmarks
+\hypersetup{hidelinks,
+  colorlinks=true,
+  allcolors=black,
+  pdfstartview=Fit,
+  breaklinks=true}
+%
+% Enable correct jumping to figures when referencing
+\usepackage[all]{hypcap}
+
+\usepackage[group-four-digits,per-mode=fraction]{siunitx}
+
+%enable \cref{...} and \Cref{...} instead of \ref: Type of reference included in the link
+\usepackage[capitalise,nameinlink]{cleveref}
+%Nice formats for \cref
+\crefname{section}{Sect.}{Sect.}
+\Crefname{section}{Section}{Sections}
+\crefname{listing}{\lstlistingname}{\lstlistingname}
+\Crefname{listing}{Listing}{Listings}
+
+%Intermediate solution for hyperlinked refs. See https://tex.stackexchange.com/q/132420/9075 for more information.
+\newcommand{\Vlabel}[1]{\label[line]{#1}\hypertarget{#1}{}}
+\newcommand{\lref}[1]{\hyperlink{#1}{\FancyVerbLineautorefname~\ref*{#1}}}
+
+\usepackage{xspace}
+%\newcommand{\eg}{e.\,g.\xspace}
+%\newcommand{\ie}{i.\,e.\xspace}
+\newcommand{\eg}{e.\,g.,\ }
+\newcommand{\ie}{i.\,e.,\ }
+
+%introduce \powerset - hint by http://matheplanet.com/matheplanet/nuke/html/viewtopic.php?topic=136492&post_id=997377
+\DeclareFontFamily{U}{MnSymbolC}{}
+\DeclareSymbolFont{MnSyC}{U}{MnSymbolC}{m}{n}
+\DeclareFontShape{U}{MnSymbolC}{m}{n}{
+  <-6>    MnSymbolC5
+  <6-7>   MnSymbolC6
+  <7-8>   MnSymbolC7
+  <8-9>   MnSymbolC8
+  <9-10>  MnSymbolC9
+  <10-12> MnSymbolC10
+  <12->   MnSymbolC12%
+}{}
+\DeclareMathSymbol{\powerset}{\mathord}{MnSyC}{180}
+
+\ifluatex
+\else
+  % Enable copy and paste - also of numbers
+  % This has to be done instead of \usepackage{cmap}, because it does not work together with cfr-lm.
+  % See: https://tex.stackexchange.com/a/430599/9075
+  \input glyphtounicode
+  \pdfgentounicode=1
+\fi
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+%% END COPYING HERE
+
+
+% Add copyright
+% Do that for the final version or if you send it to colleagues
+\iffalse
+  %state: intended|submitted|llncs
+  %you can add "crop" if the paper should be cropped to the format Springer is publishing
+  \usepackage[intended]{llncsconf}
+
+  \conference{name of the conference}
+
+  %in case of "llncs" (final version!)
+  %example: llncs{Anonymous et al. (eds). \emph{Proceedings of the International Conference on \LaTeX-Hacks}, LNCS~42. Some Publisher, 2016.}{0042}
+  \llncs{book editors and title}{0042} %% 0042 is the start page
+\fi
+
+% For demonstration purposes only
+\usepackage[math]{blindtext}
+\usepackage{mwe}
+\usepackage{pgfplots}
+
+\begin{document}
+
+\title{Modeling and Simulation of Load Balancing Strategies for Computing in High Energy Physics}
+%If Title is too long, use \titlerunning
+\titlerunning{Modeling and Simulation of Load Balancing Strategies}
+
+%Single insitute
+%\author{ \and Firstname Lastname}
+%If there are too many authors, use \authorrunning
+%\authorrunning{First Author et al.}
+%\institute{Institute}
+
+% Multiple insitutes - ALTERNATIVE to the above
+ \author{
+Ren\'e Caspart\inst{1} \and
+Patrick Firnkes\inst{2} \and
+Manuel Giffels\inst{1} \and
+Anne Koziolek\inst{2} \and
+G\"unter Quast\inst{1} \and
+Ralf Reussner\inst{2} \and
+Maximilian Stemmer-Grabow\inst{2}
+ }
+
+
+%
+%If there are too many authors, use \authorrunning
+\authorrunning{R. Caspart et al.}
+%
+\institute{
+	Institute for Experimental Particle Physics (ETP) \and
+	Institute for Program Structures and Data Organization (IPD) \\
+	at Karlsruhe Institute of Technology (KIT)
+}
+
+\maketitle
+
+\begin{abstract}
+The amount of data to be processed by experiments in high energy physics (HEP) is tremendously increasing in the coming years. To cope with this increasing load, most efficient usage of the resources is mandatory. Furthermore, the computing resources for user jobs in HEP will be increasingly distributed and heterogeneous, resulting in a more difficult scheduling due the increasing complexity of the system. 
+A first step to meet both challenges, a more efficient utilization of the grid and handling the rising complexity of the system, a simulation for the WLCG should be created. There is currently no simulation existing helping the operators of the grid to make the correct decisions while optimizing the load balancing strategy.
+
+This paper shows a proof of concept in which the computing jobs at the Tier 1 center GridKa are modeled and simulated. To model the computing jobs we extended the Palladio simulator with a mechanism to simulate load balancing strategies. Furthermore, we implemented an automated model parameter analysis and model creation.
+
+Finally, the simulation results are validated using real word performance data. Our results suggest that simulating larger parts of the grid is feasible and can help to optimize the utilization of the grid.
+\end{abstract}
+
+\begin{keywords}
+  Performance Prediction,
+  Modeling,
+  Palladio,
+  HEP,
+  Load Balancing Strategies
+\end{keywords}
+
+\section{Introduction}
+\label{sec:intro}
+
+The amount of data processed by experiments in high energy physics (HEP) will drastically increase in the coming years due the upgrade of the LHC to the High-Luminosity Large Hadron Collider (HL-LHC), creating major challenges for the community of HEP \cite{community}.
+\Cref{resources} shows the estimated CPU resources for the ATLAS experiment in the next ten years. As can be seen the flat computing budget model does not cover future needs for computing resource in the period from 2026 to 2028 due the start of the HL-LHC era. One of the key aspects to deal with this increasing load is to use the existing resources most efficiently.
+
+Another challenge for the HEP community is the increasing heterogeneity and distribution of the computing resources of user job. As cloud resources, like HNSciCloud and AWS, or institute clusters and Tier 3 centers will be used to compute them. This results in a more complex scheduling, because each resource has a different optimal job types and mixtures. Furthermore, this leads to a more dynamic data placement, where fewer centers hosts data and thus the remote access is increasing.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1.0\linewidth]{images/resources}
+	\caption[]{Estimated CPU resources of ATLAS \cite{community}}
+	\label{resources}
+\end{figure}
+
+To solve both challenges, a more efficient usage of the grid and handling the rising complexity of the system, a simulation of the WLCG should be created.
+Currently, there is no model or simulation in existence to evaluate the load balancing strategies of the grid, helping the operators to make the correct decisions while optimizing the load balancing strategy.
+\Cref{related} describes different attempts to simulate the WLCG or parts of it. However, they showed scalability issues or the simulation does not obtain the necessary detail level to simulate effects on working nodes that required to evaluate load balancing strategies.
+
+Optimizing load strategies without the help of simulations requires stable load, in order to preserve the comparability of the different strategies. This is neither possible to achieve for the WLCG nor for a single center like GridKa, because the nature of the load is highly dynamical. Another option would be to use an isolated test system for the evaluation. However, the system under inspection is too large and thus a similar test systems would not be financially affordable. A smaller test system could not deliver correct results because too much of the complexity would be taken away.
+These reasons lead to the conclusion that a model and simulation of the performance of computing jobs is required to evaluate different load balancing strategies.
+
+Our long term goal is to evaluate different load balancing strategies for the WLCG and additionally evaluate different design decisions affecting the performance of the grid. These gained insights will help the HEP community to solve the challenges caused by the HL-LHC upgrade.
+As a proof of concept we modeled and simulated the performance of CMS computing jobs at the Tier 1 center GridKa.
+The model and simulation will be created using the Palladio simulator. We extended this simulator to be able to simulate load balancing strategies. Furthermore, we created a automated model parameter analysis and model creation, to increase the usability.
+This model enables us to evaluate strategies for GridKa and allows us to draw conclusions about the best optimizations of the load balancing for the WLCG. Furthermore, it can be used as a foundation for models and simulations of larger parts of the WLCG.
+
+
+This paper is organized as follows: \Cref{sec:palladio} presents the Palladio simulator as a foundation of the simulation. \Cref{sec:process} gives a overview on the simulation process.\Cref{sec:model} describes how different elements of the computing jobs and the computing resources are represented in our model and the implementation of the necessarily extension of Palladio. \Cref{sec:param} explains how we determine the model parameters and the automated model creation. The validation is presented in \Cref{validation} and \Cref{related} puts our work in context with the related work. In \Cref{outlook} possible design decisions and how they could be modeled and simulated are presented. Finally, \Cref{conlusion} gives a conclusion on this paper.
+
+
+\section{Foundations: Palladio}
+\label{sec:palladio}
+Palladio is a model driven software architecture simulator, which is implemented as an eclipse plugin and developed by Karlsruhe Institute of Technology (KIT), FZI Research Center for Information Technology, and University of Paderborn. Palladio predicts quality of software properties (e.g. performance) using several models of a system \cite{BECKER20093}.
+
+These models are the component model, the assembly model, the resource model, the allocation model, and the usage model.
+The component model specifies the structure and behavior of the components independently from their later usage. This allows reuse of the components, but requires its parametrization.
+To represent how the components are connected to model the software architecture, the assembly model has to be created. 
+The resource model describes the resource environment. It contains the number and characteristics of the resource containers on which the components could be deployed and the topology of the network connecting these containers.
+Allocation models represent the mapping of the different components to the resource containers.
+Finally, the usage model defines how a system is used regarding workload, user behavior, and parameters.
+Once these models are created, Palladio can be used to simulate the system choosing one of several supported simulators. 
+
+Lehrig and Becker \cite{arch} extended Palladio with Architectural Templates to make it possible to model cloud computing environments efficiently.
+
+Furthermore, Palladio's simulation approach SimuLizar was created to simulate self-adaptive systems \cite{becker2013simulizar}.
+It was later extended to support the metrics scalability, elasticity, and efficiency \cite{arch}.
+
+Palladio has been successfully used to solve several industrial problems and was used to optimize cloud infrastructure in the context of chemical computing as part of the CACTOS project \cite{rapidtesting}. 
+
+\section{Simulation Process}
+\label{sec:process}
+The starting point of the simulation process is the analysis of the job and working node data to extract performance parameters for the model. For example, these are the CPU demand of jobs, the frequency of job types or the CPU power of the nodes. This analysis is automated and described in \Cref{sec:param}. The next step is the generation of the model of GridKa and the injection of the previously extracted performance parameters. Both steps can be done via the UI of Palladio and do not require manually modeling. At this point the users have a valid and calibrated model of GridKa with its resource and the workload. The properties of this model are described in \Cref{sec:model}.
+
+They can then either run the simulation or make changes to the model to simulate the effect of a design change. 
+Finally, after running the simulation, they can inspect the results, such as core utilization of a node or throughput of jobs, using the integrated visualization tool or they can export the results and use a third party software to do the evaluation.
+
+
+\section{Modeling Computing Jobs and Resources}
+\label{sec:model}
+This section describes how the computing jobs and working nodes are modeled using Palladio.
+The component model describes each type of CMS computing job, such as analysis or reprocessing jobs, with their resource demands. This demands are the CPU demand, the I/O demand, the number of used CPU cores, the required job slots, and the number of processed events.
+
+After a job is scheduled on a resource container it tries to acquire the specified number of job slots or waits if the node has not sufficient free slots. After that the CPU and I/O demand of the job are processed. To avoid one big I/O operation at the start of a job and make the processing of I/O more continuously, the processing is modeled using iterations, which represent the number of events. Thus, for each event there are I/O and CPU demands resources needed.
+While processing, the job uses the specified number of cores to process the CPU demand. When the job finishes, it releases the job slots. All of these parameters are specified as a probability function and are extracted from measured performance data as described in \Cref{sec:param}.
+
+Also each type of working node in GridKa is modeled in the resource model. Each node has a CPU and I/O processing rate, number of cores, number of job slots, and number of instances of this node type. These types of computing nodes are duplicated according to their specified number of instances as a preprocessing step of the simulation, resulting in the simulation of each working node.  
+
+At GridKa all computing jobs can run on all nodes, thus each job component is deployed on each computing node.
+
+The usage model defines which and how many jobs are scheduled. To make sure that there is always a high load on the system, we used a closed workload with 5000 jobs. Each job type has a configurable share of the overall load.
+
+We extended Palladio with a \textit{load balancing strategy action}, so that we can simulate load balancing strategies.
+This load balancing strategy action is contained in a load balancing component.
+In the assembly model all job components are connected with the load balancing component, which is the entry point of the system.
+This action decides on which node a job should be scheduled based on the currently free job slots of each working node. The load balancing strategies can be extended to evaluate different strategies.
+
+
+
+\section{Automated Model Parameter Analysis and Model Creation}
+\label{sec:param}
+\begin{itemize}
+	\item data sources, matching, parameter extraction
+	\item plugin to generate model
+	\item cms share, only jobs that were run
+	\item good usability
+\end{itemize}
+
+\section{Validation}
+\label{validation}
+To validate the model and simulation we simulated CMS jobs at GridKa in April 2018.
+The job performance data was randomly separated into two equal sized calibration and test datasets.
+
+The simulated throughput was higher than the measured one, because of that the we added a delay after each job, in order that the measured throughput matches the simulated one. The first factor for the higher throughput could be the missing overhead of pilot jobs. The second, more crucial, factor is the missing of jobs in the job data. We observed that 10-20\% of jobs are missing in the data, the cause for this is not known yet, however this should be investigated. 
+After adding the delay the simulated throughput matches the measured one accurately, as \Cref{throughput} shows.
+\Cref{shares} depicts the share of the simulated and measured job types, which also have a high accuracy.
+\begin{figure}
+	\centering
+	\includegraphics[scale = 0.4]{images/durchsatz}
+	\caption[]{Measured and Simulated Throughput}
+	\label{throughput}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[scale = 0.4]{images/shares}
+	\caption[]{Measured and Simulated Shares of Job Types}
+	\label{shares}
+\end{figure}
+
+
+The simulated CPU efficiency is lower than the measured one, as shown in \Cref{utilization}. The reason for this is likely missing jobs in the job data. Because of that is the calibrated throughput is too low resulting in a lower utilization.
+
+Simulating one week of CMS jobs at GridKa takes about 18 minutes on a laptop. Thus, it would feasible to simulate several Tiers at once in a sufficient time. However, for simulating larger parts of the WLCG a more macroscopic model, which focuses on the interaction of the Tiers and does not model their inner structure in detail,
+is recommended. 
+
+
+
+\begin{figure}
+	\vspace{-0.5ex}
+	\centering
+		\begin{tikzpicture}[scale = 1]
+		\begin{axis}[
+		xlabel={Time / s},
+		ylabel={Total CPU Time / Walltime},
+		ymin=0, ymax=1,
+		xmin=0, xmax=604800,
+		legend cell align={left},
+		]
+		\addplot[color=red] coordinates {
+			(0, 0.61)			
+			(604800, 0.61)
+		};
+		\addplot[color=blue] coordinates {	
+			(14000,0.420457263335)
+			(15000,0.455205081375)
+			(16000,0.450933749429)
+			(17000,0.46853252847)
+			(18000,0.474029527868)
+			(19000,0.482875361196)
+			(20000,0.472149795914)
+			(21000,0.448813851682)
+			(22000,0.430706201872)
+			(23000,0.401599999586)
+			(24000,0.376755783861)
+			(25000,0.38749824392)
+			(26000,0.422990841095)
+			(27000,0.425760711131)
+			(28000,0.43904605249)
+			(29000,0.437695380408)
+			(30000,0.433314619731)
+			(31000,0.448449713155)
+			(32000,0.441020436611)
+			(33000,0.444429125129)
+			(34000,0.461008578928)
+			(35000,0.470284257719)
+			(36000,0.447847515795)
+			(37000,0.441187264182)
+			(38000,0.433373025865)
+			(39000,0.426778346)
+			(40000,0.440334830361)
+			(41000,0.452643935542)
+			(42000,0.452142136739)
+			(43000,0.452471374183)
+			(44000,0.445302566248)
+			(45000,0.437814297445)
+			(46000,0.445663557997)
+			(47000,0.451677101561)
+			(48000,0.442604461856)
+			(49000,0.453882226309)
+			(50000,0.444581524102)
+			(51000,0.443425493542)
+			(52000,0.424588550506)
+			(53000,0.424918434251)
+			(54000,0.438754707788)
+			(55000,0.431586617405)
+			(56000,0.432664270787)
+			(57000,0.431460959005)
+			(58000,0.43776201488)
+			(59000,0.452017801875)
+			(60000,0.445027944703)
+			(61000,0.447754439714)
+			(62000,0.441042254855)
+			(63000,0.448994039435)
+			(64000,0.447949217961)
+			(65000,0.440335544034)
+			(66000,0.432872781216)
+			(67000,0.444765956656)
+			(68000,0.445503771932)
+			(69000,0.435313479888)
+			(70000,0.440723673441)
+			(71000,0.453581869677)
+			(72000,0.455011550524)
+			(73000,0.445251024271)
+			(74000,0.461605049304)
+			(75000,0.470460077846)
+			(76000,0.467995526805)
+			(77000,0.495748712572)
+			(78000,0.49681048222)
+			(79000,0.495635118813)
+			(80000,0.476519088357)
+			(81000,0.469046301151)
+			(82000,0.459260808853)
+			(83000,0.443186601975)
+			(84000,0.453927784554)
+			(85000,0.460996975902)
+			(86000,0.439846472086)
+			(87000,0.42853879571)
+			(88000,0.425940455445)
+			(89000,0.418188095172)
+			(90000,0.441124921832)
+			(91000,0.430042869457)
+			(92000,0.454088618748)
+			(93000,0.447812967768)
+			(94000,0.472828979798)
+			(95000,0.503483458242)
+			(96000,0.49269529217)
+			(97000,0.485731894357)
+			(98000,0.500299990804)
+			(99000,0.489833797954)
+			(100000,0.486536917579)
+			(101000,0.470900103725)
+			(102000,0.473487499528)
+			(103000,0.472852199897)
+			(104000,0.465907927377)
+			(105000,0.46843843884)
+			(106000,0.469393804824)
+			(107000,0.448337382107)
+			(108000,0.453458598472)
+			(109000,0.477909863511)
+			(110000,0.484074360628)
+			(111000,0.471446789672)
+			(112000,0.483311476858)
+			(113000,0.492794346306)
+			(114000,0.494774125893)
+			(115000,0.478760296453)
+			(116000,0.463289501118)
+			(117000,0.470560118374)
+			(118000,0.46261989666)
+			(119000,0.448321324595)
+			(120000,0.4391456597)
+			(121000,0.44616088099)
+			(122000,0.443067693493)
+			(123000,0.443765615997)
+			(124000,0.45489288544)
+			(125000,0.457761907159)
+			(126000,0.459890981374)
+			(127000,0.457265336864)
+			(128000,0.450661574709)
+			(129000,0.456319671876)
+			(130000,0.455222292845)
+			(131000,0.444168136077)
+			(132000,0.455292020739)
+			(133000,0.459739659432)
+			(134000,0.474266033943)
+			(135000,0.476719078979)
+			(136000,0.454265351086)
+			(137000,0.432403127216)
+			(138000,0.426941224365)
+			(139000,0.435303571358)
+			(140000,0.445594945267)
+			(141000,0.457945319262)
+			(142000,0.467041094326)
+			(143000,0.471275880951)
+			(144000,0.448803750886)
+			(145000,0.46057752759)
+			(146000,0.450222072137)
+			(147000,0.447748079045)
+			(148000,0.463476880757)
+			(149000,0.457547341501)
+			(150000,0.464860371781)
+			(151000,0.458939834833)
+			(152000,0.449435321435)
+			(153000,0.445809287248)
+			(154000,0.452098810214)
+			(155000,0.436323981134)
+			(156000,0.435163726955)
+			(157000,0.430055068196)
+			(158000,0.432586012365)
+			(159000,0.437297849322)
+			(160000,0.424896762305)
+			(161000,0.433031154001)
+			(162000,0.42905370657)
+			(163000,0.412624449914)
+			(164000,0.412491612196)
+			(165000,0.399704545922)
+			(166000,0.407748045902)
+			(167000,0.409904586648)
+			(168000,0.412048703271)
+			(169000,0.422106417772)
+			(170000,0.431756334979)
+			(171000,0.432552532485)
+			(172000,0.461650235913)
+			(173000,0.450819280269)
+			(174000,0.455592609364)
+			(175000,0.461503577581)
+			(176000,0.463421686809)
+			(177000,0.456182986217)
+			(178000,0.465859886059)
+			(179000,0.469016662103)
+			(180000,0.457242602407)
+			(181000,0.438524914279)
+			(182000,0.419623185788)
+			(183000,0.434867384803)
+			(184000,0.436354031073)
+			(185000,0.431955984805)
+			(186000,0.426743598615)
+			(187000,0.433639371186)
+			(188000,0.447367993742)
+			(189000,0.441424080277)
+			(190000,0.460353123518)
+			(191000,0.460813912595)
+			(192000,0.455819448956)
+			(193000,0.467462336883)
+			(194000,0.475473651551)
+			(195000,0.464487515787)
+			(196000,0.45335938384)
+			(197000,0.435968082782)
+			(198000,0.459905581295)
+			(199000,0.443261087286)
+			(200000,0.438900909062)
+			(201000,0.470264321796)
+			(202000,0.451214857632)
+			(203000,0.468171752558)
+			(204000,0.459209586602)
+			(205000,0.459254298111)
+			(206000,0.47101680367)
+			(207000,0.463033170114)
+			(208000,0.4712737853)
+			(209000,0.465450336139)
+			(210000,0.455801602051)
+			(211000,0.461908888488)
+			(212000,0.458205085034)
+			(213000,0.461468054298)
+			(214000,0.453173854006)
+			(215000,0.454871547866)
+			(216000,0.444018420001)
+			(217000,0.460956695722)
+			(218000,0.465661865182)
+			(219000,0.465518305154)
+			(220000,0.4711530613)
+			(221000,0.459010429226)
+			(222000,0.464906045582)
+			(223000,0.453027764206)
+			(224000,0.455831376049)
+			(225000,0.469807813442)
+			(226000,0.456897450438)
+			(227000,0.446722893031)
+			(228000,0.444441981548)
+			(229000,0.431491369988)
+			(230000,0.448834255688)
+			(231000,0.445076241297)
+			(232000,0.435089055194)
+			(233000,0.437592817834)
+			(234000,0.437875351009)
+			(235000,0.434588735814)
+			(236000,0.44507195818)
+			(237000,0.439254948215)
+			(238000,0.444706733582)
+			(239000,0.447474042265)
+			(240000,0.446329940764)
+			(241000,0.455749636545)
+			(242000,0.419361606614)
+			(243000,0.445397279873)
+			(244000,0.452348733449)
+			(245000,0.434373580372)
+			(246000,0.43809435824)
+			(247000,0.457201403905)
+			(248000,0.458802551256)
+			(249000,0.440383453863)
+			(250000,0.445017392448)
+			(251000,0.450084408166)
+			(252000,0.441726249534)
+			(253000,0.43194266247)
+			(254000,0.445568321745)
+			(255000,0.436278081802)
+			(256000,0.439570299584)
+			(257000,0.445136501732)
+			(258000,0.45903255575)
+			(259000,0.450554481769)
+			(260000,0.446171160379)
+			(261000,0.458690240049)
+			(262000,0.470220369345)
+			(263000,0.480684091886)
+			(264000,0.456854673542)
+			(265000,0.450233371349)
+			(266000,0.457899571788)
+			(267000,0.453334820977)
+			(268000,0.460295743577)
+			(269000,0.457349902193)
+			(270000,0.462039377481)
+			(271000,0.481382348042)
+			(272000,0.491382702182)
+			(273000,0.484220311688)
+			(274000,0.491652039182)
+			(275000,0.486379984979)
+			(276000,0.494978853484)
+			(277000,0.490824451822)
+			(278000,0.461792687666)
+			(279000,0.469822396762)
+			(280000,0.48576001703)
+			(281000,0.481488945743)
+			(282000,0.480743747455)
+			(283000,0.486090522042)
+			(284000,0.487356854396)
+			(285000,0.465745257924)
+			(286000,0.472330225888)
+			(287000,0.492995112907)
+			(288000,0.489510571313)
+			(289000,0.493418264292)
+			(290000,0.489755865611)
+			(291000,0.489256145131)
+			(292000,0.483996042192)
+			(293000,0.471077668813)
+			(294000,0.471398859559)
+			(295000,0.461127782716)
+			(296000,0.458754727805)
+			(297000,0.451312728894)
+			(298000,0.457666739683)
+			(299000,0.463072024695)
+			(300000,0.452352488238)
+			(301000,0.432056039316)
+			(302000,0.442534543126)
+			(303000,0.464020942755)
+			(304000,0.465788968846)
+			(305000,0.475194751884)
+			(306000,0.460429089784)
+			(307000,0.440203075328)
+			(308000,0.440392507843)
+			(309000,0.469031285375)
+			(310000,0.457737564909)
+			(311000,0.450884070739)
+			(312000,0.467259163074)
+			(313000,0.467018061082)
+			(314000,0.466325864949)
+			(315000,0.4515369024)
+			(316000,0.451628960618)
+			(317000,0.449715736896)
+			(318000,0.453599972995)
+			(319000,0.46598650055)
+			(320000,0.458071641171)
+			(321000,0.459795875349)
+			(322000,0.463776572273)
+			(323000,0.441893234874)
+			(324000,0.450990407649)
+			(325000,0.469838695448)
+			(326000,0.454971976955)
+			(327000,0.458423340158)
+			(328000,0.455021879641)
+			(329000,0.474962772272)
+			(330000,0.468921434665)
+			(331000,0.463586286578)
+			(332000,0.472336338416)
+			(333000,0.480203877337)
+			(334000,0.499976146642)
+			(335000,0.499528976694)
+			(336000,0.486582556042)
+			(337000,0.486946662392)
+			(338000,0.472474569197)
+			(339000,0.47914245784)
+			(340000,0.475286986461)
+			(341000,0.458659120511)
+			(342000,0.463977117388)
+			(343000,0.48570346922)
+			(344000,0.47347942112)
+			(345000,0.450392499597)
+			(346000,0.445409073982)
+			(347000,0.454343590968)
+			(348000,0.446283787024)
+			(349000,0.441991195931)
+			(350000,0.457080478112)
+			(351000,0.475143781352)
+			(352000,0.453825073455)
+			(353000,0.466696828065)
+			(354000,0.461398654993)
+			(355000,0.476432737168)
+			(356000,0.484493658032)
+			(357000,0.478381386037)
+			(358000,0.48791767455)
+			(359000,0.471135835878)
+			(360000,0.4510006391)
+			(361000,0.459254358243)
+			(362000,0.45940296355)
+			(363000,0.455276346902)
+			(364000,0.460372976975)
+			(365000,0.46432780643)
+			(366000,0.468703252372)
+			(367000,0.460690627792)
+			(368000,0.456596843643)
+			(369000,0.453188747838)
+			(370000,0.444026572421)
+			(371000,0.469540885626)
+			(372000,0.477111174668)
+			(373000,0.453778831255)
+			(374000,0.451432024952)
+			(375000,0.467745860758)
+			(376000,0.488699820134)
+			(377000,0.47828379946)
+			(378000,0.470780021427)
+			(379000,0.460858540737)
+			(380000,0.468116574189)
+			(381000,0.476739105023)
+			(382000,0.465550165705)
+			(383000,0.466704565487)
+			(384000,0.460951873868)
+			(385000,0.474085333555)
+			(386000,0.483774319139)
+			(387000,0.450257163363)
+			(388000,0.432558156082)
+			(389000,0.441761962984)
+			(390000,0.471357238783)
+			(391000,0.476402662876)
+			(392000,0.478773054016)
+			(393000,0.479343982261)
+			(394000,0.476955005539)
+			(395000,0.464686525062)
+			(396000,0.465867162002)
+			(397000,0.473713210956)
+			(398000,0.455977533182)
+			(399000,0.453556194091)
+			(400000,0.468032168961)
+			(401000,0.473372878696)
+			(402000,0.460103363611)
+			(403000,0.450437880682)
+			(404000,0.444189180728)
+			(405000,0.440631553941)
+			(406000,0.440814465656)
+			(407000,0.439132208745)
+			(408000,0.443680589194)
+			(409000,0.439364305134)
+			(410000,0.445754620988)
+			(411000,0.459675216489)
+			(412000,0.434411774646)
+			(413000,0.460859998054)
+			(414000,0.470068659819)
+			(415000,0.46398628613)
+			(416000,0.46092602178)
+			(417000,0.470952398074)
+			(418000,0.464918768054)
+			(419000,0.457250642935)
+			(420000,0.452696999147)
+			(421000,0.443597876602)
+			(422000,0.442688896448)
+			(423000,0.446975959689)
+			(424000,0.459962628411)
+			(425000,0.458639133149)
+			(426000,0.45869214177)
+			(427000,0.459339918847)
+			(428000,0.469954533509)
+			(429000,0.466801073197)
+			(430000,0.479585876798)
+			(431000,0.473889297072)
+			(432000,0.468945113898)
+			(433000,0.46819782837)
+			(434000,0.460713604747)
+			(435000,0.467085533437)
+			(436000,0.464877942532)
+			(437000,0.441101434716)
+			(438000,0.435732064901)
+			(439000,0.448217580287)
+			(440000,0.447917450562)
+			(441000,0.443407621096)
+			(442000,0.443456810485)
+			(443000,0.438987312155)
+			(444000,0.467286398042)
+			(445000,0.469189496526)
+			(446000,0.467728960254)
+			(447000,0.469175237549)
+			(448000,0.469335300568)
+			(449000,0.463820736067)
+			(450000,0.458428492443)
+			(451000,0.448441949348)
+			(452000,0.453900123964)
+			(453000,0.459953017199)
+			(454000,0.448381040252)
+			(455000,0.465700695725)
+			(456000,0.451531261356)
+			(457000,0.456563899123)
+			(458000,0.45720539038)
+			(459000,0.451801077935)
+			(460000,0.464657248779)
+			(461000,0.459373104135)
+			(462000,0.469958682024)
+			(463000,0.467903777714)
+			(464000,0.445428785915)
+			(465000,0.442499436959)
+			(466000,0.447134373326)
+			(467000,0.438282409091)
+			(468000,0.43839540036)
+			(469000,0.419945925767)
+			(470000,0.418452547982)
+			(471000,0.438307200322)
+			(472000,0.45350446074)
+			(473000,0.468786686762)
+			(474000,0.456254084131)
+			(475000,0.453297591133)
+			(476000,0.469078411526)
+			(477000,0.457354866601)
+			(478000,0.476430954364)
+			(479000,0.475029005373)
+			(480000,0.479985350112)
+			(481000,0.475381159607)
+			(482000,0.461543267652)
+			(483000,0.451592900155)
+			(484000,0.45260612709)
+			(485000,0.458008617252)
+			(486000,0.444827616864)
+			(487000,0.447400533469)
+			(488000,0.452399703406)
+			(489000,0.451208289224)
+			(490000,0.469255926366)
+			(491000,0.469056554934)
+			(492000,0.448427595423)
+			(493000,0.460791545132)
+			(494000,0.465807144119)
+			(495000,0.459466948041)
+			(496000,0.457398936667)
+			(497000,0.454270854364)
+			(498000,0.44030861198)
+			(499000,0.441478571167)
+			(500000,0.448416540804)
+			(501000,0.447708055398)
+			(502000,0.44394661343)
+			(503000,0.437604010563)
+			(504000,0.43279917301)
+			(505000,0.448202463548)
+			(506000,0.450335081656)
+			(507000,0.456367109826)
+			(508000,0.476797822515)
+			(509000,0.464004036098)
+			(510000,0.447462462599)
+			(511000,0.460128351384)
+			(512000,0.456610531662)
+			(513000,0.461027700674)
+			(514000,0.452647871516)
+			(515000,0.472383445652)
+			(516000,0.480048107691)
+			(517000,0.449495011852)
+			(518000,0.424921363583)
+			(519000,0.430957570675)
+			(520000,0.42946792577)
+			(521000,0.435679220854)
+			(522000,0.454543429655)
+			(523000,0.449873483822)
+			(524000,0.441368528175)
+			(525000,0.434726970329)
+			(526000,0.446558845708)
+			(527000,0.436523566317)
+			(528000,0.436567752145)
+			(529000,0.440939357596)
+			(530000,0.442182493949)
+			(531000,0.446092107838)
+			(532000,0.451187916749)
+			(533000,0.439896893747)
+			(534000,0.449011137767)
+			(535000,0.444120664286)
+			(536000,0.426232253223)
+			(537000,0.438918286378)
+			(538000,0.44181502269)
+			(539000,0.432995321972)
+			(540000,0.434879809332)
+			(541000,0.427145288337)
+			(542000,0.427872289185)
+			(543000,0.417701942996)
+			(544000,0.419515873503)
+			(545000,0.439790579048)
+			(546000,0.43762292406)
+			(547000,0.443042538052)
+			(548000,0.455727191114)
+			(549000,0.447614026634)
+			(550000,0.456624751487)
+			(551000,0.452793939028)
+			(552000,0.440726166681)
+			(553000,0.449038613212)
+			(554000,0.468536381832)
+			(555000,0.444002288289)
+			(556000,0.452092079245)
+			(557000,0.456883014276)
+			(558000,0.453112451125)
+			(559000,0.441037791264)
+			(560000,0.442347996342)
+			(561000,0.436264841204)
+			(562000,0.438959132682)
+			(563000,0.4451724287)
+			(564000,0.458215756554)
+			(565000,0.448690251696)
+			(566000,0.453197454907)
+			(567000,0.453794387302)
+			(568000,0.444846550094)
+			(569000,0.449982902679)
+			(570000,0.447267180536)
+			(571000,0.445828406211)
+			(572000,0.446909040851)
+			(573000,0.453980157655)
+			(574000,0.457292498947)
+			(575000,0.448977443253)
+			(576000,0.446078471261)
+			(577000,0.434934699022)
+			(578000,0.45949539644)
+			(579000,0.477069726029)
+			(580000,0.478983629734)
+			(581000,0.459161976806)
+			(582000,0.470964357654)
+			(583000,0.466734817389)
+			(584000,0.451817556376)
+			(585000,0.438500345769)
+			(586000,0.435540269671)
+			(587000,0.436722886274)
+			(588000,0.452696266979)
+			(589000,0.444922652517)
+			(590000,0.414546052368)
+			(591000,0.40666087591)
+			(592000,0.431870620823)
+			(593000,0.456065081956)
+			(594000,0.45959389509)
+			(595000,0.445709712809)
+			(596000,0.455310403564)
+			(597000,0.474126321375)
+			(598000,0.466945015295)
+			(599000,0.442916390259)
+			(600000,0.463327317157)
+			(601000,0.463538228748)
+			(602000,0.484414072165)
+			(603000,0.470969958228)
+			(604000,0.357975119833)
+			
+		};
+		\addlegendentry{Measured (average)};
+		\addlegendentry{Simulated};
+		\end{axis}
+		\end{tikzpicture}
+		\caption[]{Measured and Simulated CPU Efficiency}
+		\label{utilization}
+\end{figure}
+
+\section{Related Work}
+\label{related}
+The MONARC project was started 1998 to help with the development of the initial design of the WLCG at CERN \cite{monarc2000models}.
+However, after they initial design was developed, the project was discontinued in 2000. 
+In 2004 a second version of the MONARC simulator was released with several improvements, such as simulation of data replication. However, MONARC2 showed scalability issues when simulating a Tier-2 site and accuracy issues regarding network load \cite{1742-6596-331-7-072038}.
+
+There are a variety of grid and cloud simulators existing, of which SimGrid and CloudSim are two popular ones. 
+However, both of them are missing graphical model editors which makes the models of the computing jobs are time-consuming to create \cite{simgrid}\cite{cloudsim}. The support of graphical editors is a big advantage of Palladio and increases its usability and efficiency. 
+
+
+CACTOS is an approach to cloud infrastructure automation and optimization \cite{cactos}.
+One part of the approach is the CACTOS Runtime Toolkit for monitoring and resource management and another part is the CACTOS Prediction Toolkit for evaluation of alternative data center deployment scenarios and resource management algorithms. The Prediction Toolkit is built on Palladio and SimuLizar.
+A first case studies in the context of chemical computing showed that the Prediction Toolkit has a high accuracy, but it was not tested on large systems yet \cite{rapidtesting}. However, due the required Runtime Toolkit CACTOS was not applicable in our use case.
+
+Korenkov et. al simulated the JINR Tier1 site in 2016 \cite{jinr}. They focused on the effects of the location of the required job data the throughput of the site. However, they neither modeled each working node nor modeled details like job slots, thus this simulation would not be usable to simulate load balancing strategies on working node level.
+
+Hushchyn et al. created a simulation for the LHCb Grid in 2017 using SimGrid \cite{lhcb}. This simulation focused on which site a job should be placed based on data location. They modeled each site coarse granularly, thus it is not possible to simulate scheduling effects inside a computing center. In contrast our model is more detailed and is able to simulate effects regarding scheduling on working node level. 
+
+
+\section{Outlook}
+\label{outlook}
+The next steps are the evaluation of different design decisions using our simulation. In this section a few design decisions are described that could be simulated.
+
+One possible design decision is a more sophisticated load balancing strategy that aims for a better resource utilization of the working nodes by scheduling a balanced share of CPU and IO heavy jobs to it. To simulate this a new scheduling strategy must be implemented.
+
+Another design decision would be to experiment with different sizes of pilot jobs, assuming that smaller pilot jobs result in a better utilization due less wasted CPU capacity in the draining phase of a pilot. For this use case the model must be extended with the explicit modeling of pilots jobs.
+
+Additionally, the effects of integrating cloud resources could be simulated. The model must be extended with the cloud resources and the required network load to load the files from a site. Then a good scheduling strategy for integration of cloud resources could be evaluated, like only scheduling CPU heavy jobs to cloud resources and keep I/O heavy jobs near the data.
+
+Also the effects of data caches could be simulated. Firstly, several sites must be implemented to simulate their interactions. Secondly, the jobs must be parametrized with the possibility of remote reading. Then the data cache should be modeled. Finally, the performance improvements of the data cache by transferring data from the cache and not from sites can be simulated.
+\section{Conclusion}
+\label{conlusion}
+We successfully simulated the CMS computing jobs at GridKa. To enable easy usage of the simulation we implemented an automated model parameter extraction and model creation. Furthermore, we extended Palladio to be able to simulate load balancing strategies. Our first results suggest that this approach could deliver accurate results regarding CPU efficiency, however it must be investigated what the reason for the data inconsistency and missing job information is. Regarding scalability we are confident that several computing centers could be simulated in such a detailed manner like we did with the CMS computing jobs at GridKa. For use cases that require the simulation of larger parts of the WLCG we suggest a more macroscopic model that focuses on the interaction of the sites and models the sites internals on a less detailed level.
+
+This proof of concept showed that an automated model parameter extraction and model creation is possible and that Palladio can be used to evaluate load balancing strategies for computing in HEP. In contrast to the existing simulations our simulation models a site in a more detailed way, enabling the evaluation of load balancing strategies on working node level. Furthermore, we are confident that our approach helps to improve utilization of the grid. The next step is the evaluation of a design decision mentioned in \Cref{outlook}.
+
+
+
+\renewcommand{\bibsection}{\section*{References}} % requried for natbib to have "References" printed and as section*, not chapter*
+% Use natbib compatbile splncsnat style.
+% It does provide all features of splncs03, but is developed in a clean way.
+% Source: http://phaseportrait.blogspot.de/2011/02/natbib-compatible-bibtex-style-bst-file.html
+\bibliographystyle{splncsnat}
+\begingroup
+  \ifluatex
+    %try to activate if bibliography looks ugly
+    %\sloppy
+  \else
+    \microtypecontext{expansion=sloppy}
+  \fi
+  \small % ensure correct font size for the bibliography
+  \bibliography{paper}
+\endgroup
+
+% Enfore empty line after bibliography
+\ \\
+%
+
+\end{document}
