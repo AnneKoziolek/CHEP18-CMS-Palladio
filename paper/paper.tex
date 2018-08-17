@@ -22,7 +22,7 @@
 	Manuel Giffels${}^{1}$,
 	Anne Koziolek${}^{2}$,
 	G\"unter Quast${}^{1}$,
-	Ralf Reussner${}^{2}$ and 
+	Ralf Reussner${}^{2}$, 
 	Maximilian Stemmer-Grabow${}^{2}$}
 
 \address{
@@ -48,7 +48,7 @@
 The amount of data processed by experiments in high energy physics (HEP) will drastically increase in the coming years due the upgrade of the LHC to the High-Luminosity Large Hadron Collider (HL-LHC), creating major challenges for the community of HEP \cite{community}.
 \Cref{resources} shows the estimated required and provided CPU resources for the ATLAS experiment in the next ten years. Assuming a flat computing budget model, the estimated provided resources do not cover future needs for computing resource in the period from 2026 to 2028 due the start of the HL-LHC era. One of the key aspects to deal with this increasing load is the more efficient usage of existing resources.
 
-Another challenge for the HEP community is the increasing heterogeneity and distribution of the computing resources of user jobs. Cloud resources, like HNSciCloud and AWS, or institute clusters and Tier 3 centers will be progressively introduced for the computation of these jobs. This results in a more complex scheduling, because each resource has a different optimal job types and mixtures. Furthermore, this leads to a more dynamic data placement, where fewer centers hosts data and thus the remote access is increasing.
+Another challenge for the HEP community is the increasing heterogeneity and distribution of the computing resources of user jobs. Cloud resources, such as HNSciCloud and AWS, or institute clusters and Tier 3 centers will be progressively introduced for the computation of these jobs. This results in a more complex scheduling, because each resource has different optimal job types and mixtures. Furthermore, this leads to a more dynamic data placement, where fewer centers host data and thus remote access is increasing.
 
 \begin{figure}
 	\centering
@@ -57,7 +57,7 @@ Another challenge for the HEP community is the increasing heterogeneity and dist
 	\label{resources}
 \end{figure}
 
-To solve both challenges, a more efficient usage of the grid and coping with the rising complexity of the system, a simulation of the WLCG should be created.
+To solve both challenges, a more efficient usage of the grid and coping with the rising complexity of the system, a simulation for the WLCG should be created.
 Currently, there is no model or simulation in existence to evaluate the load balancing strategies of the grid, helping the operators to make the correct decisions while optimizing the load balancing strategy.
 \Cref{related} describes different attempts to simulate the WLCG or parts of it. However, they showed scalability issues or the simulations do not have the necessary detail level to simulate effects on working nodes that is necessary to evaluate load balancing strategies.
 
@@ -66,12 +66,12 @@ These reasons lead to the conclusion that a model and simulation of the performa
 
 Our long term goal is to evaluate different load balancing strategies for the WLCG and additionally evaluate different design decisions affecting the performance of the grid. These gained insights will help the HEP community to solve the challenges caused by the HL-LHC upgrade.
 
-The contribution of this paper is the modeling and simulating the performance of CMS computing jobs at the Tier 1 center GridKa as a proof of concept.
+The contribution of this paper is the modeling and simulating of CMS computing jobs at the Tier 1 center GridKa as a proof of concept.
 The model and simulation are created using the Palladio simulator. We extended this simulator to be able to simulate load balancing strategies. Furthermore, we created a automated model parameter analysis and model creation, to increase the usability.
 This model enables us to evaluate different load balancing strategies for GridKa and enables us to draw conclusions about the best optimizations of the load balancing for the WLCG. Furthermore, it can be used as a foundation for models and simulations of larger parts of the WLCG.
 
 
-This paper is organized as follows: \Cref{sec:palladio} presents the Palladio simulator as a foundation of the simulation. \Cref{sec:process} gives a overview on the simulation process. \Cref{sec:model} describes how different elements of the computing jobs and the computing resources are represented in our model and the implementation of the necessarily extension of Palladio. \Cref{sec:param} explains how we determine the model parameters and the automated model creation. The validation is presented in \Cref{validation} and \Cref{related} puts our work in context with the related work. In \Cref{outlook} possible design decisions and how they could be modeled and simulated are presented. Finally, \Cref{conlusion} gives a conclusion on this paper.
+This paper is organized as follows: \Cref{sec:palladio} presents the Palladio simulator as a foundation of the simulation. \Cref{sec:process} gives a overview on the simulation process. \Cref{sec:model} describes how different elements of the computing jobs and the computing resources are represented in our model. \Cref{sec:param} explains how we determine the model parameters and the automated model creation works. The validation is presented in \Cref{validation} and \Cref{related} puts our work in context with the related work. In \Cref{outlook} possible design decisions and how they could be modeled and simulated are presented. Finally, \Cref{conlusion} gives a conclusion on this paper.
 
 
 \section{Foundations: Palladio}
@@ -91,18 +91,18 @@ Once these models are created, Palladio can be used to simulate the system choos
 
 Lehrig and Becker \cite{arch} extended Palladio with Architectural Templates to make it possible to model cloud computing environments efficiently.
 Furthermore, Palladio's simulation approach SimuLizar was created to simulate self-adaptive systems \cite{becker2013simulizar}.
-It was later extended to support the metrics scalability, elasticity, and efficiency \cite{arch}.
+It was later extended to support the metrics scalability, elasticity, and efficiency.
 
 Palladio has been successfully used to solve several industrial problems and was used to optimize cloud infrastructure in the context of chemical computing as part of the CACTOS project \cite{rapidtesting}. 
 
 \section{Simulation Process}
 \label{sec:process}
 
-\Cref{process} shows the simulation process starting with the matching of the data sets to receiving a valid model of the site and its jobs.
+\Cref{process} depicts the simulation process starting with matching of the data sets to receiving a valid model of the site and its jobs.
 
-The starting point of the simulation process is to match the data sets from different data sources as a prerequisite  of the analysis. In our proof of concept we have three data sources: The CERN WMArchive, CMS GridKa job data and GridKa node performance data.
+The starting point of the simulation process is matching the data sets from different data sources as a prerequisite  of the analysis. In our proof of concept we have three data sources: The CERN WMArchive, CMS GridKa job data and GridKa node performance data. These data sets have to be matched because each set contains different information about an executed job, but non of them contains the complete information about it.
 
-After matching and grouping the data for job types the analysis of the job and working node data to extract performance parameters for the model can take place. For example, these are the CPU demand of jobs, the frequency of the job types or the CPU power of the nodes. This analysis and the data set matching are automated and described in \Cref{sec:param}.
+After matching and grouping the data for job types, the analysis of the job and working node data to extract performance parameters for the model takes place. For example, these are the CPU demand of jobs, the frequency of the job types or the CPU power of the nodes. This analysis and the data set matching are automated and described in \Cref{sec:param}.
 
 The next step is the generation of the model of GridKa and the injection of the previously extracted performance parameters. Both steps can be done via the UI of Palladio and do not require manually modeling. At this point the users have a valid and calibrated model of GridKa with its resource and the workload. The properties of this model are described in \Cref{sec:model}.
 
@@ -122,7 +122,7 @@ Finally, after running the simulation, they can inspect the results, such as cor
 This section describes how the computing jobs and working nodes are modeled using Palladio.
 The component model describes each type of CMS computing job, such as analysis or reprocessing jobs, with their resource demands. This demands are the CPU demand, the I/O demand, the number of used CPU cores, the required job slots, and the number of processed events.
 
-After a job is scheduled on a resource container it acquires the specified number of job slots or waits if the node has not sufficient free slots. After that the CPU and I/O demand of the job are processed. To avoid one big I/O operation at the start of a job and make the processing of I/O more continuously, the processing is modeled using iterations that reflect the number of events. Thus, for each iteration there are I/O and CPU resources needed. Rather than simulating each event, we simulate a part of the processed events, because the simulation of each event would harm the scalability of the simulation. 
+After a job is scheduled on a resource container it acquires the specified number of job slots or waits if the node has not sufficient free slots. Afterwards the CPU and I/O demands of the job are processed. To avoid one big I/O operation at the start of a job and to make the processing of I/O more continuously, the processing is modeled using iterations that reflect the number of events. Thus, for each iteration there are I/O and CPU resources needed. Rather than simulating each event, we simulate a fraction of the processed events, because the simulation of each event would harm the scalability of the simulation. 
 While processing, the job uses the specified number of cores to process the CPU demand. To simulate not explicitly modeled elements of the jobs such as the overhead created by pilot jobs we added a delay to each job. This delay is calibrated in order to match the measured throughput. After the job finished, it releases its acquired job slots. All of these parameters are specified as a probability function and are extracted from measured performance data as described in \Cref{sec:param}.
 
 Each type of working node in GridKa is modeled in the resource model. Each node type has a CPU and I/O processing rate, number of cores, number of job slots, and number of instances of this node type. The types of computing nodes are duplicated according to their specified number of instances as a preprocessing step of the simulation, resulting in the simulation of each working node.
@@ -152,12 +152,12 @@ This action decides on which node a job should be scheduled based on the current
 To validate the model and simulation we simulated CMS jobs at GridKa in April 2018.
 The job performance data was randomly separated into two equal sized calibration and test datasets.
 
-As mentioned in \Cref{sec:model} a delay was added to the job to simulate not explicitly modeled elements. This delay was calibrated so that the measured throughput matches the simulated one of the calibration dataset. The simulated throughput of the test dataset matches the measured one accurately with only 1\% difference.
+As mentioned in \Cref{sec:model} a delay was added to the job to simulate the effects of not explicitly modeled elements. This delay was calibrated so that the measured throughput matches the simulated one of the calibration dataset. The simulated throughput of the test dataset matches the measured one accurately with only 1\% difference.
 \Cref{shares} depicts the share of the simulated and measured job types, which also have a high accuracy.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
-	\includegraphics[scale = 0.4]{images/shares}
+	\includegraphics[scale = 0.6]{images/shares}
 	\caption[]{Measured and Simulated Shares of Job Types}
 	\label{shares}
 \end{figure}
@@ -794,21 +794,20 @@ However, after the initial design was developed, the project was discontinued in
 In 2004 a second version of the MONARC simulator was released with several improvements, such as simulation of data replication. However, MONARC2 showed scalability issues when simulating a Tier-2 site and accuracy issues regarding network load \cite{1742-6596-331-7-072038}.
 
 There are a variety of grid and cloud simulators existing, of which SimGrid and CloudSim are two popular ones. 
-However, both of them are missing graphical model editors which makes the modeling of the computing jobs time-consuming \cite{simgrid}\cite{cloudsim}. The support of graphical editors is a big advantage of Palladio and increases its usability and efficiency. 
-\todo{other advantages palladio?}
+However, both of them are implemented as libraries and not as standalone simulators. Thus, both are missing graphical model editors which makes the modeling of the computing jobs time-consuming \cite{simgrid}\cite{cloudsim}. The support of graphical editors is a big advantage of Palladio and increases its usability and efficiency. Another advantage of Palladio is the separation of the system into different models, which enables one to change on part of the system without modifying others. Furthermore, both do lack the support of an integrated visualization tool to display the results.  
+
 
 CACTOS is an approach to cloud infrastructure automation and optimization \cite{cactos}.
 One part of the approach is the CACTOS Runtime Toolkit for monitoring and resource management and another part is the CACTOS Prediction Toolkit for evaluation of alternative data center deployment scenarios and resource management algorithms. The Prediction Toolkit is built on Palladio and SimuLizar.
 A first case studies in the context of chemical computing showed that the Prediction Toolkit has a high accuracy, but it was not tested on large systems yet \cite{rapidtesting}. However, due the required Runtime Toolkit CACTOS was not applicable in our use case.
 
-Korenkov et. al simulated the JINR Tier1 site in 2016 \cite{jinr} and Hushchyn et al. created a simulation for the LHCb Grid in 2017 using SimGrid \cite{lhcb}. Both simulations focused on the effects of the location of the required job data on the throughput of the sites.
-
+Korenkov et. al simulated the JINR Tier1 site in 2016 \cite{jinr} and Hushchyn et al. created a simulation for the LHCb Grid in 2017 \cite{lhcb}. Both simulations focused on the effects of the location of the required job data on the throughput of the sites.
 However, they neither modeled each working node nor modeled details of the scheduling process like job slots, thus both simulations would not be usable to simulate load balancing strategies on working node level.
 
 
 \section{Outlook}
 \label{outlook}
-Our next steps are the evaluation of different design decisions. In this section a few design decisions are described that could be simulated.
+Our next steps are the evaluation of different design decisions. In this section a selection of possible design decisions that could be simulated are presented.
 
 One possible design decision is a more sophisticated load balancing strategy that aims for a better resource utilization of the working nodes by scheduling a balanced share of CPU and IO heavy jobs to it. To simulate this a new scheduling strategy must be implemented.
 
@@ -819,10 +818,13 @@ Additionally, the effects of integrating cloud resources could be simulated. The
 Also the effects of data caches could be simulated. Firstly, several sites must be modeled to simulate their interactions. Secondly, the jobs must be parametrized with the possibility of remote access. Then the data cache should be modeled. Finally, the performance improvements of the data cache by transferring data from the cache and not from sites can be simulated.
 \section{Conclusion}
 \label{conlusion}
+
+Computing resources for user analyses will become increasingly distributed and heterogeneous in the future and 
+scheduling will be a key component for the efficient usage of the grid. We are confident that our approach helps to improve utilization of the grid and to be able to cope with the rising complexity of the system, thus serves the HEP community as a tool to solve the challenges created by the HL-LHC update.
+
 We successfully simulated the CMS computing jobs at GridKa. To enable easy usage of the simulation we implemented an automated model parameter extraction and model creation. Furthermore, we extended Palladio to be able to simulate load balancing strategies. Our first results suggest that this approach could deliver accurate results regarding CPU efficiency, however it must be investigated what the reason for the data inconsistency and missing job information is. Regarding scalability we are confident that several computing centers could be simulated on a detailed level. For use cases that require the simulation of larger parts of the WLCG we suggest a more macroscopic model that focuses on the interaction of the sites and models the sites internals on a less detailed level.
 
-This proof of concept showed that an automated model parameter extraction and model creation is possible and that Palladio can be used to evaluate load balancing strategies for computing in HEP. In contrast to the existing simulations our simulation models a site in a more detailed way, enabling the evaluation of load balancing strategies on working node level. Furthermore, we are confident that our approach helps to improve utilization of the grid and thus helps solving the challenges created by the HL-LHC update. The next step is the evaluation of a design decision mentioned in \Cref{outlook}.
-
+This proof of concept showed that an automated model parameter extraction and model creation is possible and that Palladio can be used to evaluate load balancing strategies for computing in HEP. In contrast to the existing simulations our simulation models a site in a more detailed way, enabling the evaluation of load balancing strategies on working node level. The next step is the evaluation of design decisions mentioned in \Cref{outlook}.
 \section*{References}
 \bibliography{paper}
 
