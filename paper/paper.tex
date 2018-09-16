@@ -138,14 +138,31 @@ This action decides on which node a job should be scheduled based on the current
 
 
 
-\section{Automated Model Parameter Analysis and Model Creation}
+\section{Model Parameter Extraction and Model Creation}
 \label{sec:param}
+
+To obtain a comprehensive view both of the resource usage of CMS jobs executed at a WLCG grid site as well as the resources available there to process them, combining information from multiple data sources is required:
 \begin{itemize}
-	\item data sources, matching, parameter extraction
-	\item plugin to generate model
-	\item cms share, only jobs that were run
-	\item good usability
+    \item We acquire Historical job monitoring information from several global CMS monitoring systems: Job reports from JobMonitoring and Workflow and Data Management framework job reports (FWJR documents) are archived on the \emph{analytix} Hadoop cluster.
+    The latter are being archived on the cluster as part of the WMArchive project \cite{WMArchiveWorkloadArchive2018}.
+    We collect job information using the \emph{CMSSpark} framework by Kuznetsov et al. \cite{cmsspark}.
+
+    For this proof of concept, only jobs executed at the GridKa site were considered, but these data sources can be used to collect job reports from arbitrary WLCG sites.
+    As these data sets contain different metrics for each executed job and not every job is contained in each data set, they are matched to each other to identify records that describe the same job execution prior to analysis.
+    \item Site-specific performance data sets include the available nodes at the site and their performance information (including node benchmarks such as HS06 scores), which are available from local site monitoring systems.
+    The simulation currently only includes computing jobs from CMS.
+    As GridKa also processes jobs for other experiments, the number of available nodes at the site is scaled down to match the share of CMS workloads at the site in the time frame used for calibration.
+    This share of resources is also collected from site-local monitoring information, as well as CPU efficiency reference data for the workloads executed in the same time frame.
 \end{itemize}
+To allow quick extraction of model parameters from these data sets, we implemented data set matching as well as the following analysis steps in an automated, configurable model parameter extraction tool written in Python.
+Matching job information to local node performance information allows their resource usage to be decoupled from the hardware used to execute them, e.g. by combining the CPU time they used with node benchmarks of the machine they were executed on.
+
+For the purposes of this proof of concept, jobs were then grouped according to their type as indicated in the job reports, but the extraction framework allows to be configured for arbitrary groupings of the extracted jobs.
+Job resource requirement distributions for the different job types are extracted as distributions based on the empirical distributions in the data sets used for calibration, in the form of discretized probability density functions.
+
+The parameter extraction tool exports model parameter sets as JSON files.
+To simplify calibrating simulation models with these parameter sets, we created a Palladio plugin that can be used to automatically complete a blueprint of the simulation model (which defines the structure of the model as described in section \ref{sec:model}) with arbitrary parameter sets.
+This ensures an efficient and flexible model creation process.
 
 \section{Validation}
 \label{validation}
