@@ -34,9 +34,9 @@
 
 \begin{abstract}
 	The amount of data to be processed by experiments in high energy physics (HEP) is tremendously increasing in the coming years. To cope with this increasing load, most efficient usage of the resources is mandatory. Furthermore, the computing resources for user jobs in HEP will be increasingly distributed and heterogeneous, resulting in a more difficult scheduling due the increasing complexity of the system. 
-	A first step to meet both challenges, a more efficient utilization of the grid and coping with the rising complexity of the system, a simulation for the WLCG should be created. There is currently no simulation existing helping the operators of the grid to make the correct decisions while optimizing the load balancing strategy.
+	As first step to meet both challenges, a more efficient utilization of the grid and coping with the rising complexity of the system, a simulation for the WLCG should be created. \todo{Vorherigen Satz umbauen, Einschub im vorderen Teil schwer verständlich} There is currently no simulation existing helping the operators of the grid to make the correct decisions while optimizing the load balancing strategy.
 	
-	This paper shows a proof of concept in which the computing jobs at the Tier 1 center GridKa are modeled and simulated. To model the computing jobs we extended the Palladio simulator with a mechanism to simulate load balancing strategies. Furthermore, we implemented an automated model parameter analysis and model creation.
+	This paper presents a proof of concept in which the computing jobs at the Tier 1 center GridKa are modeled and simulated. To model the computing jobs we extended the Palladio simulator with a mechanism to simulate load balancing strategies. Furthermore, we implemented an automated model parameter analysis and model creation.
 	
 	Finally, the simulation results are validated using real word performance data. Our results suggest that simulating larger parts of the grid is feasible and can help to optimize the utilization of the grid.
 \end{abstract}
@@ -48,7 +48,7 @@
 The amount of data processed by experiments in high energy physics (HEP) will drastically increase in the coming years due the upgrade of the LHC to the High-Luminosity Large Hadron Collider (HL-LHC), creating major challenges for the community of HEP \cite{community}.
 \Cref{resources} shows the estimated required and provided CPU resources for the ATLAS experiment in the next ten years. Assuming a flat computing budget model, the estimated provided resources do not cover future needs for computing resource in the period from 2026 to 2028 due the start of the HL-LHC era. One of the key aspects to deal with this increasing load is the more efficient usage of existing resources.
 
-Another challenge for the HEP community is the increasing heterogeneity and distribution of the computing resources of user jobs. Cloud resources, such as HNSciCloud and AWS, or institute clusters and Tier 3 centers will be progressively introduced for the computation of these jobs. This results in a more complex scheduling, because each resource has different optimal job types and mixtures. Furthermore, this leads to a more dynamic data placement, where fewer centers host data and thus remote access is increasing.
+Another challenge for the HEP community is the increasing heterogeneity and distribution of the computing resources of user jobs. Cloud resources, such as HNSciCloud and AWS, or institute clusters and Tier 3 centers will be progressively introduced for the computation of these jobs. This results in a more complex scheduling, because each resource has different optimal job types and mixes. Furthermore, this leads to a more dynamic data placement, where fewer centers host data and thus remote access is increasing.
 
 \begin{figure}
 	\centering
@@ -57,7 +57,7 @@ Another challenge for the HEP community is the increasing heterogeneity and dist
 	\label{resources}
 \end{figure}
 
-To solve both challenges, a more efficient usage of the grid and coping with the rising complexity of the system, a simulation for the WLCG should be created.
+To solve both challenges, a more efficient usage of the grid and coping with the rising complexity of the system\todo{Einschub umformulieren}, a simulation for the WLCG should be created.\todo{``we aim to'' statt ``should'', auch im Abstract}
 Currently, there is no model or simulation in existence to evaluate the load balancing strategies of the grid, helping the operators to make the correct decisions while optimizing the load balancing strategy.
 \Cref{related} describes different attempts to simulate the WLCG or parts of it. However, they showed scalability issues or the simulations do not have the necessary detail level to simulate effects on working nodes that is necessary to evaluate load balancing strategies.
 
@@ -67,7 +67,7 @@ These reasons lead to the conclusion that a model and simulation of the performa
 Our long term goal is to evaluate different load balancing strategies for the WLCG and additionally evaluate different design decisions affecting the performance of the grid. These gained insights will help the HEP community to solve the challenges caused by the HL-LHC upgrade.
 
 The contribution of this paper is the modeling and simulating of CMS computing jobs at the Tier 1 center GridKa as a proof of concept.
-The model and simulation are created using the Palladio simulator, see \Cref{sec:palladio} for details on Palladio. This leads to the research question which modifications are needed so that Palladio can be used to evaluate load balancing strategies for the CMS computing jobs, because the simulation of load balancing strategies is a new use case for Palladio. To realise it we created an extension for the simulator that enables us to simulate load balancing strategies and furthermore, we created an automated model parameter analysis and model creation, in order to increase the usability of the simulation.
+The model and simulation are created using the Palladio simulator, see \Cref{sec:palladio} for details on Palladio. This leads to the research question which modifications are needed so that Palladio can be used to evaluate load balancing strategies for the CMS computing jobs, because the simulation of load balancing strategies is a new use case for Palladio \todo{lieber more high level: ``can we simulate?''. Eher: This paper presents prototype simulation model and extensions of Palladio?}. To realise it we created an extension for the simulator that enables us to simulate load balancing strategies and furthermore, we created an automated model parameter analysis and model creation, in order to increase the usability of the simulation.
 This model enables us to evaluate different load balancing strategies for GridKa and enables us to draw conclusions about the best optimizations of the load balancing for the WLCG. Furthermore, it can be used as a foundation for models and simulations of larger parts of the WLCG.
 
 
@@ -99,13 +99,13 @@ Palladio has been successfully used to solve several industrial problems and was
 \label{sec:process}
 To receive a valid model of a site and its jobs, we created the simulation process depicted in \Cref{process}. This process consists of five phases: Matching of data sets, grouping the data for job types, analysing the model parameters, generating a blueprint model, and lastly injecting the parameters into this model. Note, only a part of the data is used to calibrate the model, the other part is used for its validation.
 
-The starting point of the simulation process is matching the data sets from different data sources as a prerequisite  of the analysis. In our proof of concept we have three data sources: The CERN WMArchive, CMS GridKa job data and GridKa node performance data. These data sets have to be matched because each set contains different information about an executed job, but non of them contains the complete information about it.
+The starting point of the simulation process is matching the data sets from different data sources as a prerequisite  of the analysis. In our proof of concept we have three data sources: The CERN WMArchive, CMS GridKa job data and GridKa node performance data. These data sets have to be matched because each set contains different information about an executed job, but none of them contains the complete information about it.
 
 After matching and grouping the data for job types, the analysis of the job and working node data to extract performance parameters for the model takes place. For example, these are the CPU demand of jobs, the frequency of the job types or the CPU power of the nodes. This analysis and the data set matching are automated and described in \Cref{sec:param}.
 
-The next step is the generation of the model of GridKa and the injection of the previously extracted performance parameters. Both steps can be done via the UI of Palladio and do not require manually modeling. At this point the users have a valid and calibrated model of GridKa with its resource and the workload. The properties of this model are described in \Cref{sec:model}.
+The next step is the generation of the model of GridKa and the injection of the previously extracted performance parameters. Both steps can be done via the UI of Palladio and do not require manually modeling \todo{Unklar, weil UI nach manual klingt.}. At this point the users have a valid and calibrated model of GridKa with its resource and the workload. The properties of this model are described in \Cref{sec:model}.
 
-They can then either run the simulation or make changes to the model to simulate the effect of a design change. 
+Users can then either run the simulation or make changes to the model to simulate the effect of a design change. 
 Finally, after running the simulation, they can inspect the results, such as core utilization of a node or throughput of jobs, using the integrated visualization tool or they can export the results and use a third party software to do the evaluation.
 
 \begin{figure}
@@ -117,11 +117,11 @@ Finally, after running the simulation, they can inspect the results, such as cor
 
 
 \section{Modeling Computing Jobs and Resources}
-\label{sec:model}
+\label{sec:model}\todo{Grafik?}
 This section describes how the computing jobs and working nodes are modeled using Palladio.
-The component model describes each type of CMS computing job, such as analysis or reprocessing jobs, with their resource demands. This demands are the CPU demand, the I/O demand, the number of used CPU cores, the required job slots, and the number of processed events.
+The component model describes each type of CMS computing job, such as analysis or reprocessing jobs, with their resource demands. These demands are the CPU demand, the I/O demand, the number of used CPU cores, the required job slots, and the number of processed events.
 
-After a job is scheduled on a resource container it acquires the specified number of job slots or waits if the node has not sufficient free slots. Afterwards, the CPU and I/O demands of the job are processed. To avoid one big I/O operation at the start of a job and to make the processing of I/O more continuously, the processing is modeled using iterations that reflect the number of events. Thus, for each iteration there are I/O and CPU resources needed. Rather than simulating each event, we simulate a fraction of the processed events, because the simulation of each event would harm the scalability of the simulation. 
+After a job is scheduled on a resource container, it acquires the specified number of job slots or waits if the node has not sufficient free slots. Afterwards, the CPU and I/O demands of the job are processed. To avoid one big I/O operation at the start of a job and to make the processing of I/O more continuously, the processing is modeled using iterations that reflect the number of events. Thus, for each iteration there are I/O and CPU resources needed. Rather than simulating each event, we simulate a fraction of the processed events, because the simulation of each event would harm the scalability of the simulation. 
 While processing, the job uses the specified number of cores to process the CPU demand. To simulate not explicitly modeled elements of the jobs such as the overhead created by pilot jobs we added a delay to each job. This delay is calibrated in order to match the measured throughput of the test data. After the job finished, it releases its acquired job slots. All of these parameters are specified as a probability function and are extracted from measured performance data as described in \Cref{sec:param}.
 
 Each type of working node in GridKa is modeled in the resource model. Each node type has a CPU and I/O processing rate, number of cores, number of job slots, and number of instances of this node type. The types of computing nodes are duplicated according to their specified number of instances as a preprocessing step of the simulation, resulting in the simulation of each working node.
@@ -138,7 +138,7 @@ This action decides on which node a job should be scheduled based on the current
 
 
 \section{Model Parameter Extraction and Model Creation}
-\label{sec:param}
+\label{sec:param}\todo{Links zu den Projekten einfügen, wo langfristig archivieren? Zendodo?}
 
 To obtain a comprehensive view both of the resource usage of CMS jobs executed at a WLCG grid site as well as the resources available there to process them, combining information from multiple data sources is required:
 \begin{itemize}
@@ -801,7 +801,7 @@ The simulated CPU efficiency is lower than the measured one, as shown in \Cref{u
 \end{figure}
 
 Simulating one week of CMS jobs at GridKa takes about 18 minutes on a laptop. Thus, it would feasible to simulate several Tiers at once in a sufficient time. However, for simulating larger parts of the WLCG a more macroscopic model, which focuses on the interaction of the Tiers and does not model their inner structure in detail,
-is recommended. 
+is recommended. \todo{Formulierung nicht passiv. Positiver: How to aggregate is future work?}
 
 
 \section{Related Work}
