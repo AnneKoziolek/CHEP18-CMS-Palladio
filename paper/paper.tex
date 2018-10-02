@@ -52,7 +52,7 @@ Another challenge for the HEP community is the increasing heterogeneity and dist
 
 \begin{figure}
 	\centering
-	\includegraphics[width=1.0\linewidth]{images/resources}
+	\includegraphics[width=0.7\linewidth]{images/resources}
 	\caption[]{Estimated CPU resources of ATLAS \cite{community}}
 	\label{resources}
 \end{figure}
@@ -67,7 +67,7 @@ These reasons lead to the conclusion that a model and simulation of the performa
 Our long term goal is to evaluate different load balancing strategies for the WLCG and additionally evaluate different design decisions affecting the performance of the grid. These gained insights will help the HEP community to solve the challenges caused by the HL-LHC upgrade.
 
 The contribution of this paper is the modeling and simulating of CMS computing jobs at the Tier 1 center GridKa as a proof of concept.
-The model and simulation are created using the Palladio simulator. We extended this simulator to be able to simulate load balancing strategies. Furthermore, we created a automated model parameter analysis and model creation, to increase the usability.
+The model and simulation are created using the Palladio simulator, see \Cref{sec:palladio} for details on Palladio. This leads to the research question which modifications are needed so that Palladio can be used to evaluate load balancing strategies for the CMS computing jobs, because the simulation of load balancing strategies is a new use case for Palladio. To realise it we created an extension for the simulator that enables us to simulate load balancing strategies and furthermore, we created an automated model parameter analysis and model creation, in order to increase the usability of the simulation.
 This model enables us to evaluate different load balancing strategies for GridKa and enables us to draw conclusions about the best optimizations of the load balancing for the WLCG. Furthermore, it can be used as a foundation for models and simulations of larger parts of the WLCG.
 
 
@@ -97,8 +97,7 @@ Palladio has been successfully used to solve several industrial problems and was
 
 \section{Simulation Process}
 \label{sec:process}
-
-\Cref{process} depicts the simulation process starting with matching of the data sets to receiving a valid model of the site and its jobs.
+To receive a valid model of a site and its jobs, we created the simulation process depicted in \Cref{process}. This process consists of five phases: Matching of data sets, grouping the data for job types, analysing the model parameters, generating a blueprint model, and lastly injecting the parameters into this model. Note, only a part of the data is used to calibrate the model, the other part is used for its validation.
 
 The starting point of the simulation process is matching the data sets from different data sources as a prerequisite  of the analysis. In our proof of concept we have three data sources: The CERN WMArchive, CMS GridKa job data and GridKa node performance data. These data sets have to be matched because each set contains different information about an executed job, but non of them contains the complete information about it.
 
@@ -111,7 +110,7 @@ Finally, after running the simulation, they can inspect the results, such as cor
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.6\linewidth]{images/process}
+	\includegraphics[width=0.55\linewidth]{images/process}
 	\caption[]{The Simulation Process}
 	\label{process}
 \end{figure}
@@ -122,8 +121,8 @@ Finally, after running the simulation, they can inspect the results, such as cor
 This section describes how the computing jobs and working nodes are modeled using Palladio.
 The component model describes each type of CMS computing job, such as analysis or reprocessing jobs, with their resource demands. This demands are the CPU demand, the I/O demand, the number of used CPU cores, the required job slots, and the number of processed events.
 
-After a job is scheduled on a resource container it acquires the specified number of job slots or waits if the node has not sufficient free slots. Afterwards the CPU and I/O demands of the job are processed. To avoid one big I/O operation at the start of a job and to make the processing of I/O more continuously, the processing is modeled using iterations that reflect the number of events. Thus, for each iteration there are I/O and CPU resources needed. Rather than simulating each event, we simulate a fraction of the processed events, because the simulation of each event would harm the scalability of the simulation. 
-While processing, the job uses the specified number of cores to process the CPU demand. To simulate not explicitly modeled elements of the jobs such as the overhead created by pilot jobs we added a delay to each job. This delay is calibrated in order to match the measured throughput. After the job finished, it releases its acquired job slots. All of these parameters are specified as a probability function and are extracted from measured performance data as described in \Cref{sec:param}.
+After a job is scheduled on a resource container it acquires the specified number of job slots or waits if the node has not sufficient free slots. Afterwards, the CPU and I/O demands of the job are processed. To avoid one big I/O operation at the start of a job and to make the processing of I/O more continuously, the processing is modeled using iterations that reflect the number of events. Thus, for each iteration there are I/O and CPU resources needed. Rather than simulating each event, we simulate a fraction of the processed events, because the simulation of each event would harm the scalability of the simulation. 
+While processing, the job uses the specified number of cores to process the CPU demand. To simulate not explicitly modeled elements of the jobs such as the overhead created by pilot jobs we added a delay to each job. This delay is calibrated in order to match the measured throughput of the test data. After the job finished, it releases its acquired job slots. All of these parameters are specified as a probability function and are extracted from measured performance data as described in \Cref{sec:param}.
 
 Each type of working node in GridKa is modeled in the resource model. Each node type has a CPU and I/O processing rate, number of cores, number of job slots, and number of instances of this node type. The types of computing nodes are duplicated according to their specified number of instances as a preprocessing step of the simulation, resulting in the simulation of each working node.
 
@@ -143,7 +142,7 @@ This action decides on which node a job should be scheduled based on the current
 
 To obtain a comprehensive view both of the resource usage of CMS jobs executed at a WLCG grid site as well as the resources available there to process them, combining information from multiple data sources is required:
 \begin{itemize}
-    \item We acquire Historical job monitoring information from several global CMS monitoring systems: Job reports from JobMonitoring and Workflow and Data Management framework job reports (FWJR documents) are archived on the \emph{analytix} Hadoop cluster.
+    \item We acquire historical job monitoring information from several global CMS monitoring systems: Job reports from JobMonitoring and Workflow and Data Management framework job reports (FWJR documents) are archived on the \emph{analytix} Hadoop cluster.
     The latter are being archived on the cluster as part of the WMArchive project \cite{WMArchiveWorkloadArchive2018}.
     We collect job information using the \emph{CMSSpark} framework by Kuznetsov et al. \cite{cmsspark}.
 
@@ -167,7 +166,7 @@ This ensures an efficient and flexible model creation process.
 \section{Validation}
 \label{validation}
 To validate the model and simulation we simulated CMS jobs at GridKa in April 2018.
-The job performance data was randomly separated into two equal sized calibration and test datasets.
+The job performance data was randomly separated into two equal sized calibration and test datasets. For the validation we considered the following metrics: Overall throughput of jobs, shares of the job types and the CPU efficiency of the site. These metrics describe how well the simulation matches the measured performance data.
 
 As mentioned in \Cref{sec:model} a delay was added to the job to simulate the effects of not explicitly modeled elements. This delay was calibrated so that the measured throughput matches the simulated one of the calibration dataset. The simulated throughput of the test dataset matches the measured one accurately with only 1\% difference.
 \Cref{shares} depicts the share of the simulated and measured job types, which also have a high accuracy.
@@ -182,15 +181,12 @@ As mentioned in \Cref{sec:model} a delay was added to the job to simulate the ef
 
 The simulated CPU efficiency is lower than the measured one, as shown in \Cref{utilization}. The reason for this are likely missing jobs in the job data. We observed that a significant amount of data is missing, the cause for this is not known yet, however this should be investigated. Because of that the calibrated throughput is too low, resulting in a lower utilization. Another reason is the missing utilization created by pilot jobs that are not explicitly modeled yet.
 
-Simulating one week of CMS jobs at GridKa takes about 18 minutes on a laptop. Thus, it would feasible to simulate several Tiers at once in a sufficient time. However, for simulating larger parts of the WLCG a more macroscopic model, which focuses on the interaction of the Tiers and does not model their inner structure in detail,
-is recommended. 
 
 
-
-\begin{figure}
+\begin{figure}[h]
 	\vspace{-0.5ex}
 	\centering
-	\begin{tikzpicture}[scale = 1]
+	\begin{tikzpicture}[scale = 0.8]
 	\begin{axis}[
 	xlabel={Time / s},
 	ylabel={Total CPU Time / Walltime},
@@ -804,6 +800,10 @@ is recommended.
 	\label{utilization}
 \end{figure}
 
+Simulating one week of CMS jobs at GridKa takes about 18 minutes on a laptop. Thus, it would feasible to simulate several Tiers at once in a sufficient time. However, for simulating larger parts of the WLCG a more macroscopic model, which focuses on the interaction of the Tiers and does not model their inner structure in detail,
+is recommended. 
+
+
 \section{Related Work}
 \label{related}
 The MONARC project was started 1998 to help with the development of the initial design of the WLCG at CERN \cite{monarc2000models}.
@@ -826,7 +826,7 @@ However, they neither modeled each working node nor modeled details of the sched
 \label{outlook}
 Our next steps are the evaluation of different design decisions. In this section a selection of possible design decisions that could be simulated are presented.
 
-One possible design decision is a more sophisticated load balancing strategy that aims for a better resource utilization of the working nodes by scheduling a balanced share of CPU and IO heavy jobs to it. To simulate this a new scheduling strategy must be implemented.
+One possible design decision is a more sophisticated load balancing strategy that aims for a better resource utilization of the working nodes by scheduling a balanced share of CPU and I/O heavy jobs to it. To simulate this a new scheduling strategy must be implemented.
 
 Another design decision would be to experiment with different sizes of pilot jobs, assuming that smaller pilot jobs result in a better utilization due less wasted CPU capacity in the draining phase of a pilot. For this use case the model must be extended with the explicit modeling of pilots jobs.
 
