@@ -124,7 +124,7 @@ This section describes how the computing jobs and working nodes are modeled usin
 The component model describes each type of CMS computing job, such as analysis or reprocessing jobs, with their resource demands. These demands are the \textit{CPU demand}, the\textit{ I/O demand}, the \textit{number of used CPU cores}, the \textit{required job slot}s, and the \textit{number of processed events}.
 
 After a job is scheduled on a resource container, it acquires the specified number of job slots or waits if the node has not sufficient free slots. Afterwards, the CPU and I/O demands of the job are processed. To avoid one big I/O operation at the start of a job and to make the processing of I/O more continuously, the processing is modeled using iterations that reflect the number of events. Thus, for each iteration there are I/O and CPU resources needed. Rather than simulating each event, we simulate a fraction of the processed events, because the simulation of each event would harm the scalability of the simulation. 
-While processing, the job uses the specified number of cores to process the CPU demand. To simulate not explicitly modeled elements of the jobs such as the overhead created by pilot jobs we added a delay to each job. This delay is calibrated in order to match the measured throughput of the test data. After the job finished, it releases its acquired job slots. All of these parameters are specified as a probability function and are extracted from measured performance data as described in \Cref{sec:param}.
+While processing, the job uses the specified number of cores to process the CPU demand. After the job finished, it releases its acquired job slots. All of these parameters are specified as a probability function and are extracted from measured performance data as described in \Cref{sec:param}.
 
 Each type of working node in GridKa is modeled in the resource model. Each node type has a \textit{CPU and I/O processing rate}, \textit{number of cores}, \textit{number of job slots}, and \textit{number of instances} of this node type. The types of computing nodes are duplicated according to their specified number of instances as a preprocessing step of the simulation, resulting in the simulation of each working node.
 
@@ -170,8 +170,8 @@ This ensures an efficient and flexible model creation process.
 To validate the model and simulation we simulated CMS jobs at GridKa in April 2018.
 The job performance data was randomly separated into two equal sized calibration and test datasets. For the validation we considered the following metrics: Overall throughput of jobs, shares of the job types and the CPU efficiency of the site. These metrics describe how well the simulation matches the measured performance data.
 
-As mentioned in \Cref{sec:model} a delay was added to the job to simulate the effects of not explicitly modeled elements. This delay was calibrated so that the measured throughput matches the simulated one of the calibration dataset. The simulated throughput of the test dataset matches the measured one accurately with only 1\% difference.
-\Cref{shares} depicts the share of the simulated and measured job types, which also have a high accuracy.
+The simulated throughput of the test dataset matches the measured one accurately with only 1\% difference.
+\Cref{shares} depicts the share of the simulated and measured job types that also shows  a high accuracy.
 
 \begin{figure}[h]
 	\centering
