@@ -1,4 +1,5 @@
-\documentclass[a4paper]{jpconf}
+\documentclass{webofc}
+\usepackage[varg]{txfonts}   
 
 \usepackage{graphicx}
 
@@ -11,28 +12,29 @@
 \Crefname{listing}{Listing}{Listings}
 \usepackage{pgfplots}
 
-\bibliographystyle{iopart-num}
-
 
 \begin{document}
 \title{Modeling and Simulation of Load Balancing Strategies for Computing in High Energy Physics}
 
-\author{Ren\'e Caspart${}^{1}$,
-	Patrick Firnkes${}^{2}$,
-	Manuel Giffels${}^{1}$,
-	Anne Koziolek${}^{2}$,
-	G\"unter Quast${}^{1}$,
-	Ralf Reussner${}^{2}$, 
-	Maximilian Stemmer-Grabow${}^{2}$}
+\author{
+	\firstname{Ren\'e} \lastname{Caspart}\inst{1} \and
+	\firstname{Patrick} \lastname{Firnkes}\inst{2} \and
+	\firstname{Manuel} \lastname{Giffels}\inst{1} \and
+	\firstname{Anne} \lastname{Koziolek}\inst{2}\fnsep\thanks{\email{koziolek@kit.edu}} \and
+	\firstname{G\"unter} \lastname{Quast}\inst{1} \and
+	\firstname{Ralf} \lastname{Reussner}\inst{2} \and
+	\firstname{Maximilian} \lastname{Stemmer-Grabow}\inst{2}
+}
 
-\address{
-	${}^{1}$Institute for Experimental Particle Physics (ETP) \\
-	${}^{2}$Institute for Program Structures and Data Organization (IPD) \\
-	at Karlsruhe Institute of Technology (KIT), Karlsruhe, Germany}
+\institute{
+	Institute for Experimental Particle Physics (ETP) 
+	\and
+   Institute for Program Structures and Data Organization (IPD) \\
+	at Karlsruhe Institute of Technology (KIT), Karlsruhe, Germany
+}
 
-\ead{koziolek@kit.edu}
 
-\begin{abstract}
+\abstract{%
 	The amount of data to be processed by experiments in high energy physics (HEP) is tremendously increasing in the coming years. To cope with this increasing load, most efficient usage of the resources is mandatory. Furthermore, the computing resources for user jobs in HEP will be increasingly distributed and heterogeneous, resulting in a more difficult scheduling due the increasing complexity of the system. 
 	We aim to create a simulation for the WLCG helping the HEP community to solve both challenges: a more efficient utilization of the grid and coping with the rising complexity of the system.
 	There is currently no simulation existing helping the operators of the grid to make the correct decisions while optimizing the load balancing strategy.
@@ -40,8 +42,9 @@
 	This paper presents a proof of concept in which the computing jobs at the Tier 1 center GridKa are modeled and simulated. To model the computing jobs we extended the Palladio simulator with a mechanism to simulate load balancing strategies. Furthermore, we implemented an automated model parameter analysis and model creation.
 	
 	Finally, the simulation results are validated using real word performance data. Our results suggest that simulating larger parts of the grid is feasible and can help to optimize the utilization of the grid.
-\end{abstract}
-
+}%
+\maketitle
+%
 
 \section{Introduction}
 \label{sec:intro}
@@ -51,12 +54,12 @@ The amount of data processed by experiments in high energy physics (HEP) will dr
 
 Another challenge for the HEP community is the increasing heterogeneity and distribution of the computing resources of user jobs. Cloud resources, such as HNSciCloud and AWS, or institute clusters and Tier 3 centers will be progressively introduced for the computation of these jobs. This results in a more complex scheduling, because each resource has different optimal job types and mixes. Furthermore, this leads to a more dynamic data placement, where fewer centers host data and thus remote access is increasing.
 
-\begin{figure}
+\begin{figure*}
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/resources}
 	\caption[]{Estimated CPU resources of ATLAS \cite{community}}
 	\label{resources}
-\end{figure}
+\end{figure*}
 
 We aim to create a simulation for the WLCG helping the HEP community to solve both challenges: a more efficient utilization of the grid and coping with the rising complexity of the system.
 Currently, there is no model or simulation in existence to evaluate the load balancing strategies of the grid, helping the operators to make the correct decisions while optimizing the load balancing strategy.
@@ -110,12 +113,12 @@ The next step is the generation of the model of GridKa and the injection of the 
 Users can then either run the simulation or make changes to the model to simulate the effect of a design change. 
 Finally, after running the simulation, they can inspect the results, such as core utilization of a node or throughput of jobs, using the integrated visualization tool or they can export the results and use a third party software to do the evaluation.
 
-\begin{figure}
+\begin{figure*}
 	\centering
 	\includegraphics[width=0.55\linewidth]{images/process}
 	\caption[]{The Simulation Process}
 	\label{process}
-\end{figure}
+\end{figure*}
 
 
 \section{Modeling Computing Jobs and Resources}
@@ -131,12 +134,12 @@ The component model describes each type of CMS computing job, such as analysis o
 While processing, the job uses the specified number of threads to process the CPU demand. After the job finished, it releases its acquired job slots. All of these parameters are specified as a probability function and are extracted from measured performance data as described in \Cref{sec:param}.
 
 
-\begin{figure}
+\begin{figure*}
 	\centering
 	\includegraphics[width=1\linewidth]{images/seff}
 	\caption[]{Model of Job Behaviour}
 	\label{seff}
-\end{figure}
+\end{figure*}
 
 Each type of working node in GridKa is modeled in the resource model. Each node type has a \textit{CPU and I/O processing rate}, \textit{number of cores}, \textit{number of job slots}, and \textit{number of instances} of this node type. The types of computing nodes are duplicated according to their specified number of instances as a preprocessing step of the simulation, resulting in the simulation of each working node.
 
@@ -185,19 +188,19 @@ The job performance data was randomly separated into two equal sized calibration
 The simulated throughput of the test dataset matches the measured one accurately with only 1\% difference.
 \Cref{shares} depicts the share of the simulated and measured job types that also shows  a high accuracy.
 
-\begin{figure}[h]
+\begin{figure*}[h]
 	\centering
 	\includegraphics[scale = 0.6]{images/shares}
 	\caption[]{Measured and Simulated Shares of Job Types}
 	\label{shares}
-\end{figure}
+\end{figure*}
 
 
 The simulated CPU efficiency is lower than the measured one, as shown in \Cref{utilization}. The reason for this are likely missing jobs in the job data. We observed that a significant amount of data is missing, the cause for this is not known yet, however this should be investigated. Because of that the calibrated throughput is too low, resulting in a lower utilization. Another reason is the missing utilization created by pilot jobs that are not explicitly modeled yet.
 
 
 
-\begin{figure}[h]
+\begin{figure*}[h]
 	\vspace{-0.5ex}
 	\centering
 	\begin{tikzpicture}[scale = 0.8]
@@ -812,7 +815,7 @@ The simulated CPU efficiency is lower than the measured one, as shown in \Cref{u
 	\end{tikzpicture}
 	\caption[]{Measured and Simulated CPU Efficiency}
 	\label{utilization}
-\end{figure}
+\end{figure*}
 
 Simulating one week of CMS jobs at GridKa takes about 24 minutes on a laptop. Thus, it would feasible to simulate several Tiers at once in a sufficient time, however simulating larger parts of the grid is future work.
 
@@ -855,7 +858,7 @@ scheduling will be a key component for the efficient usage of the grid. We are c
 We successfully simulated the CMS computing jobs at GridKa. To enable easy usage of the simulation we implemented an automated model parameter extraction and model creation. Furthermore, we extended Palladio to be able to simulate load balancing strategies. Our first results are promising and suggest that this approach can be used to simulate load balancing strategies accurately. Regarding scalability we are confident that several computing centers can simulated in a sufficient time, however this is part of future work.
 
 This proof of concept showed that an automated model parameter extraction and model creation is possible and that Palladio can be used to evaluate load balancing strategies for computing in HEP. In contrast to the existing simulations our simulation models a site in a more detailed way, enabling the evaluation of load balancing strategies on working node level. The next step is the evaluation of design decisions mentioned in \Cref{outlook}.
-\section*{References}
+
 \bibliography{paper}
 
 \end{document}
