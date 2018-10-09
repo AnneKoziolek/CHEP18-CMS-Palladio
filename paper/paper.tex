@@ -119,12 +119,24 @@ Finally, after running the simulation, they can inspect the results, such as cor
 
 
 \section{Modeling Computing Jobs and Resources}
-\label{sec:model}\todo{Grafik?}
+\label{sec:model}
 This section describes how the computing jobs and working nodes are modeled using Palladio.
-The component model describes each type of CMS computing job, such as analysis or reprocessing jobs, with their resource demands. These demands are the \textit{CPU demand}, the\textit{ I/O demand}, the \textit{number of used CPU cores}, the \textit{required job slot}s, and the \textit{number of processed events}.
+The component model describes each type of CMS computing job, such as analysis or reprocessing jobs, with their resource demands. These demands are the \textit{CPU demand}, the\textit{ I/O demand}, the \textit{number of threads}, the \textit{required job slots}, and the \textit{number of demand rounds}.
 
-After a job is scheduled on a resource container, it acquires the specified number of job slots or waits if the node has not sufficient free slots. Afterwards, the CPU and I/O demands of the job are processed. To avoid one big I/O operation at the start of a job and to make the processing of I/O more continuously, the processing is modeled using iterations that reflect the number of events. Thus, for each iteration there are I/O and CPU resources needed. Rather than simulating each event, we simulate a fraction of the processed events, because the simulation of each event would harm the scalability of the simulation. 
-While processing, the job uses the specified number of cores to process the CPU demand. After the job finished, it releases its acquired job slots. All of these parameters are specified as a probability function and are extracted from measured performance data as described in \Cref{sec:param}.
+
+
+
+
+\Cref{seff} shows the behaviour of the job during the simulation. After a job is scheduled on a resource container, it acquires the specified number of job slots or waits if the node has not sufficient free slots. Afterwards, the CPU and I/O demands of the job are processed. To avoid one big I/O operation at the start of a job and to make the processing of I/O more continuously, the processing is modeled using iterations that reflect the number of processed events. Thus, for each iteration there are I/O and CPU resources needed. Rather than simulating each event, we simulate a fraction of the processed events, because the simulation of each event would harm the scalability of the simulation. 
+While processing, the job uses the specified number of threads to process the CPU demand. After the job finished, it releases its acquired job slots. All of these parameters are specified as a probability function and are extracted from measured performance data as described in \Cref{sec:param}.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1\linewidth]{images/seff}
+	\caption[]{Model of Job Behaviour}
+	\label{seff}
+\end{figure}
 
 Each type of working node in GridKa is modeled in the resource model. Each node type has a \textit{CPU and I/O processing rate}, \textit{number of cores}, \textit{number of job slots}, and \textit{number of instances} of this node type. The types of computing nodes are duplicated according to their specified number of instances as a preprocessing step of the simulation, resulting in the simulation of each working node.
 
@@ -802,8 +814,7 @@ The simulated CPU efficiency is lower than the measured one, as shown in \Cref{u
 	\label{utilization}
 \end{figure}
 
-Simulating one week of CMS jobs at GridKa takes about 18 minutes on a laptop. Thus, it would feasible to simulate several Tiers at once in a sufficient time. However, for simulating larger parts of the WLCG a more macroscopic model, which focuses on the interaction of the Tiers and does not model their inner structure in detail,
-is recommended. \todo{Formulierung nicht passiv. Positiver: How to aggregate is future work?}
+Simulating one week of CMS jobs at GridKa takes about 24 minutes on a laptop. Thus, it would feasible to simulate several Tiers at once in a sufficient time, however simulating larger parts of the grid is future work.
 
 
 \section{Related Work}
@@ -841,7 +852,7 @@ Also the effects of data caches could be simulated. Firstly, several sites must 
 Computing resources for user analyses will become increasingly distributed and heterogeneous in the future and 
 scheduling will be a key component for the efficient usage of the grid. We are confident that our approach helps to improve utilization of the grid and to be able to cope with the rising complexity of the system, thus serves the HEP community as a tool to solve the challenges created by the HL-LHC update.
 
-We successfully simulated the CMS computing jobs at GridKa. To enable easy usage of the simulation we implemented an automated model parameter extraction and model creation. Furthermore, we extended Palladio to be able to simulate load balancing strategies. Our first results suggest that this approach could deliver accurate results regarding CPU efficiency, however it must be investigated what the reason for the data inconsistency and missing job information is. Regarding scalability we are confident that several computing centers could be simulated on a detailed level. For use cases that require the simulation of larger parts of the WLCG we suggest a more macroscopic model that focuses on the interaction of the sites and models the sites internals on a less detailed level.
+We successfully simulated the CMS computing jobs at GridKa. To enable easy usage of the simulation we implemented an automated model parameter extraction and model creation. Furthermore, we extended Palladio to be able to simulate load balancing strategies. Our first results are promising and suggest that this approach can be used to simulate load balancing strategies accurately. Regarding scalability we are confident that several computing centers can simulated in a sufficient time, however this is part of future work.
 
 This proof of concept showed that an automated model parameter extraction and model creation is possible and that Palladio can be used to evaluate load balancing strategies for computing in HEP. In contrast to the existing simulations our simulation models a site in a more detailed way, enabling the evaluation of load balancing strategies on working node level. The next step is the evaluation of design decisions mentioned in \Cref{outlook}.
 \section*{References}
