@@ -38,7 +38,7 @@
 
 
 \abstract{%
-	The amount of data to be processed by experiments in high energy physics (HEP) is tremendously increasing in the coming years. To cope with this increasing load, most efficient usage of the resources is mandatory. Furthermore, the computing resources for user jobs in HEP will be increasingly distributed and heterogeneous, resulting in a more difficult scheduling due the increasing complexity of the system. 
+	The amount of data to be processed by experiments in high energy physics (HEP) is tremendously increasing in the coming years. To cope with this increasing load, most efficient usage of the resources is mandatory. Furthermore, the computing resources for user jobs in HEP will be increasingly distributed and heterogeneous, resulting in more difficult scheduling due the increasing complexity of the system.
 	We aim to create a simulation for the WLCG helping the HEP community to solve both challenges: a more efficient utilization of the grid and coping with the rising complexity of the system.
 	There is currently no simulation existing helping the operators of the grid to make the correct decisions while optimizing the load balancing strategy.
 	
@@ -52,7 +52,7 @@
 \section{Introduction}
 \label{sec:intro}
 
-The amount of data processed by experiments in high energy physics (HEP) will drastically increase in the coming years due the upgrade of the LHC to the High-Luminosity Large Hadron Collider (HL-LHC), creating major challenges for the community of HEP \cite{community}.
+The amount of data processed by experiments in high energy physics (HEP) will drastically increase in the coming years due the upgrade of the LHC to the High-Luminosity Large Hadron Collider (HL-LHC), creating major challenges for the HEP community \cite{community}.
 \Cref{resources} shows the estimated required and provided CPU resources for the ATLAS experiment in the next ten years. Assuming a flat computing budget model, the estimated provided resources do not cover future needs for computing resource in the period from 2026 to 2028 due the start of the HL-LHC era. One of the key aspects to deal with this increasing load is the more efficient usage of existing resources.
 
 Another challenge for the HEP community is the increasing heterogeneity and distribution of the computing resources of user jobs. Cloud resources, such as HNSciCloud and AWS, or institute clusters and Tier 3 centers will be progressively introduced for the computation of these jobs. This results in a more complex scheduling, because each resource has different optimal job types and mixes. Furthermore, this leads to a more dynamic data placement, where fewer centers host data and thus remote access is increasing.
@@ -133,7 +133,7 @@ The component model describes each type of CMS computing job, such as analysis o
 
 
 
-\Cref{seff} shows the behaviour of the job during the simulation. After a job is scheduled on a resource container, it acquires the specified number of job slots or waits if the node has not sufficient free slots. Afterwards, the CPU and I/O demands of the job are processed. To avoid one big I/O operation at the start of a job and to make the processing of I/O more continuously, the processing is modeled using iterations that reflect the number of processed events. Thus, for each iteration there are I/O and CPU resources needed. Rather than simulating each event, we simulate a fraction of the processed events, because the simulation of each event would harm the scalability of the simulation. 
+\Cref{seff} shows the behaviour of the job during the simulation. After a job is scheduled on a resource container, it acquires the specified number of job slots or waits if the node has not sufficient free slots. Afterwards, the CPU and I/O demands of the job are processed. To avoid one big I/O operation at the start of a job and to make the simulated processing of I/O more continuous, it is modeled using iterations that reflect the number of processed events. Thus, for each iteration there are I/O and CPU resources needed. Rather than simulating each event, we simulate a fraction of the processed events, because the simulation of each event would harm the scalability of the simulation. 
 While processing, the job uses the specified number of threads to process the CPU demand. After the job finished, it releases its acquired job slots. All of these parameters are specified as a probability function and are extracted from measured performance data as described in \Cref{sec:param}.
 
 
@@ -194,7 +194,7 @@ This ensures an efficient and flexible model creation process.
     \begin{subfigure}{0.48\linewidth}
         \includegraphics[width=\linewidth]{images/validation/utilizations}
     \end{subfigure}
-    \caption{Measured and simulated throughputs and CPU efficiency for test data from May 2018}
+    \caption{Measured and simulated throughputs and CPU efficiency, job data from May 2018}
     \label{fig:validation}
 \end{figure}
 
@@ -203,12 +203,12 @@ The job performance data was split into two equal sized calibration and test dat
 For the validation we considered the following metrics: Overall throughput of jobs, shares of the job types, and the overall CPU efficiency of the site.
 These metrics describe how well the simulation matches the measured performance data.
 Comparisons between  simulation results and measurements from the system itself for them are shown in figure \ref{fig:validation}.
-The simulated throughput matches the reference from the with a difference of about 5.6\%.
+The simulated throughput matches the reference with a difference of about 5.6\%.
 The share of the simulated and measured job types also match accurately.
 
 The CPU utilization in the simulation and a comparison with the measured CPU efficiency is also shown in figure \ref{fig:validation}.
-Here, the ramp-up of the simulation is also visible.
-The overall average utilization in the simulation deviates from the reference by about 3\%, showing that even the current simplified model is capable of accurately reproducing the metrics introduced above.
+The initial ramp-up of the simulation is also visible.
+The overall average utilization in the simulation deviates from the reference by about 3\%, showing that even the current simplified model is capable of reproducing the metrics introduced above.
 Runtimes of the simulated jobs were also measured, the average runtime of simulated jobs deviates by approximately 8\% from the measured runtimes in the test data set.
 
 Simulating one week of CMS jobs at GridKa takes about 24 minutes on a laptop.
