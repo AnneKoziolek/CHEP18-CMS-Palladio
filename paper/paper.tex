@@ -15,6 +15,10 @@
 % Use package for subfigures
 \usepackage{subcaption}
 
+% layout changes
+\setlength\belowcaptionskip{-15pt}
+\renewcommand*{\bibfont}{\footnotesize}
+
 
 \begin{document}
 \title{Modeling and Simulation of Load Balancing Strategies for Computing in High Energy Physics}
@@ -59,7 +63,7 @@ Another challenge for the HEP community is the increasing heterogeneity and dist
 
 \begin{figure*}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/resources}
+	\includegraphics[width=0.5\linewidth]{images/resources}
 	\caption[]{Estimated CPU resources of ATLAS \cite{community}}
 	\label{resources}
 \end{figure*}
@@ -76,7 +80,7 @@ Our long term goal is to evaluate different load balancing strategies for the WL
 The contribution of this paper is the modeling and simulating of CMS computing jobs at the Tier 1 center GridKa as a proof of concept.
 The model and simulation are created using the Palladio simulator, see \Cref{sec:palladio} for details on Palladio. We chose Palladio to archive a scalable simulation because it is a comparably abstract simulator (\Cref{related} gives an overview on other simulators and approaches).
 This leads to the research question how we can use Palladio to evaluate load balancing strategies for the CMS computing jobs, because the simulation of load balancing strategies is a new use case for Palladio. To realise it we created an extension for the simulator that enables us to simulate load balancing strategies and furthermore, we created an automated model parameter analysis and model creation, in order to increase the usability of the simulation.
-This model enables us to evaluate different load balancing strategies for GridKa and enables us to draw conclusions about the best optimizations of the load balancing for the WLCG. Furthermore, it can be used as a foundation for models and simulations of larger parts of the WLCG.
+This model enables us to evaluate different load balancing strategies for GridKa and enables us to draw conclusions about the best optimizations of the load balancing for the WLCG. Also, it can be used as a foundation for models and simulations of larger parts of the WLCG.
 
 
 This paper is organized as follows: \Cref{sec:palladio} presents the Palladio simulator as a foundation of the simulation. \Cref{sec:process} gives a overview on the simulation process. \Cref{sec:model} describes how different elements of the computing jobs and the computing resources are represented in our model. \Cref{sec:param} explains how we determine the model parameters and the automated model creation works. The validation is presented in \Cref{validation} and \Cref{related} puts our work in context with the related work. In \Cref{outlook} possible design decisions and how they could be modeled and simulated are presented. Finally, \Cref{conlusion} gives a conclusion on this paper.
@@ -118,7 +122,7 @@ Finally, after running the simulation, they can inspect the results, such as cor
 
 \begin{figure*}
 	\centering
-	\includegraphics[width=0.55\linewidth]{images/process}
+	\includegraphics[width=0.45\linewidth]{images/process}
 	\caption[]{The Simulation Process}
 	\label{process}
 \end{figure*}
@@ -139,8 +143,8 @@ While processing, the job uses the specified number of threads to process the CP
 
 \begin{figure*}
 	\centering
-	\includegraphics[width=1\linewidth]{images/seff}
-	\caption[]{Model of Job Behaviour}
+	\includegraphics[width=0.8\linewidth]{images/seff}
+	\caption[]{Model of Job Behavior}
 	\label{seff}
 \end{figure*}
 
@@ -186,33 +190,35 @@ This ensures an efficient and flexible model creation process.
 \section{Validation}
 \label{validation}
 
-\begin{figure}
-    \centering
-    \begin{subfigure}{0.48\linewidth}
-        \includegraphics[width=\linewidth]{images/validation/throughputs}
-    \end{subfigure}
-    \begin{subfigure}{0.48\linewidth}
-        \includegraphics[width=\linewidth]{images/validation/utilizations}
-    \end{subfigure}
-    \caption{Measured and simulated throughputs and CPU efficiency, job data from May 2018}
-    \label{fig:validation}
+\begin{figure}[h]
+	\centering
+	\vspace{-10px}
+	\begin{subfigure}{0.48\linewidth}
+		\includegraphics[width=\linewidth]{images/validation/throughputs}
+	\end{subfigure}
+	\begin{subfigure}{0.48\linewidth}
+		\includegraphics[width=\linewidth]{images/validation/utilizations}
+	\end{subfigure}
+	\vspace{-10px}
+	\caption{Measured and simulated throughputs and CPU efficiency, job data from May 2018}
+	\label{fig:validation}
 \end{figure}
-
-To validate the model and simulation we simulated CMS jobs at GridKa in May 2018.
+\vspace{10px}
+\noindent To validate the model and simulation we simulated CMS jobs at GridKa in May 2018.
 The job performance data was split into two equal sized calibration and test datasets by randomly sampling reports from the full data set.
 For the validation we considered the following metrics: Overall throughput of jobs, shares of the job types, and the overall CPU efficiency of the site.
 These metrics describe how well the simulation matches the measured performance data.
-Comparisons between  simulation results and measurements from the system itself for them are shown in figure \ref{fig:validation}.
+Comparisons between  simulation results and measurements from the system itself for them are shown in figure \Cref{fig:validation}.
 The simulated throughput matches the reference with a difference of about 5.6\%.
 The share of the simulated and measured job types also match accurately.
 
-The CPU utilization in the simulation and a comparison with the measured CPU efficiency is also shown in figure \ref{fig:validation}.
+The CPU utilization in the simulation and a comparison with the measured CPU efficiency is also shown in figure \Cref{fig:validation}.
 The initial ramp-up of the simulation is also visible.
 The overall average utilization in the simulation deviates from the reference by about 3\%, showing that even the current simplified model is capable of reproducing the metrics introduced above.
 Runtimes of the simulated jobs were also measured, the average runtime of simulated jobs deviates by approximately 8\% from the measured runtimes in the test data set.
 
 Simulating one week of CMS jobs at GridKa takes about 24 minutes on a laptop.
-Thus, it would be feasible to simulate several sites at once in a reasonable time, however simulating larger parts of the grid is future work.
+Thus, it is feasible to simulate several sites at once in a reasonable time, however simulating larger parts of the grid is future work.
 
 \section{Related Work}
 \label{related}
@@ -252,6 +258,9 @@ scheduling will be a key component for the efficient usage of the grid. We are c
 We successfully simulated the CMS computing jobs at GridKa. To enable easy usage of the simulation we implemented an automated model parameter extraction and model creation. Furthermore, we extended Palladio to be able to simulate load balancing strategies. Our first results are promising and suggest that this approach can be used to simulate load balancing strategies accurately. Regarding scalability we are confident that several computing centers can be simulated in a sufficient time, however this is part of future work.
 
 This proof of concept showed that an automated model parameter extraction and model creation is possible and that Palladio can be used to evaluate load balancing strategies for computing in HEP. In contrast to the existing simulations our simulation models a site in a more detailed way, enabling the evaluation of load balancing strategies on working node level. The next step is the evaluation of design decisions mentioned in \Cref{outlook}.
+
+
+
 
 \bibliography{paper}
 
