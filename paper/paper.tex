@@ -12,13 +12,15 @@
 \Crefname{listing}{Listing}{Listings}
 \usepackage{pgfplots}
 \newcommand{\footurl}[1]{\footnote{\url{#1}}}
+
 % Use package for subfigures
 \usepackage{subcaption}
-
+\captionsetup[figure]{font={normalfont, small}, labelfont={bf}, labelsep=period, justification=raggedright,singlelinecheck=false}
 
 
 % layout changes
 \usepackage{dblfnote}
+
 \setlength\abovecaptionskip{5pt}
 \setlength\belowcaptionskip{-15pt}
 \renewcommand*{\bibfont}{\footnotesize}
