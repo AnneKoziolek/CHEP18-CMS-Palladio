@@ -11,11 +11,15 @@
 \crefname{listing}{\lstlistingname}{\lstlistingname}
 \Crefname{listing}{Listing}{Listings}
 \usepackage{pgfplots}
-
+\newcommand{\footurl}[1]{\footnote{\url{#1}}}
 % Use package for subfigures
 \usepackage{subcaption}
 
+
+
 % layout changes
+\usepackage{dblfnote}
+\setlength\abovecaptionskip{5pt}
 \setlength\belowcaptionskip{-15pt}
 \renewcommand*{\bibfont}{\footnotesize}
 
@@ -30,7 +34,7 @@
 	\firstname{Anne} \lastname{Koziolek}\inst{2}\fnsep\thanks{\email{koziolek@kit.edu}} \and
 	\firstname{G\"unter} \lastname{Quast}\inst{1}\fnsep\thanks{\email{g.quast@kit.edu}} \and
 	\firstname{Ralf} \lastname{Reussner}\inst{2}\fnsep\thanks{\email{reussner@kit.edu}} \and
-	\firstname{Maximilian} \lastname{Stemmer-Grabow}\fnsep\thanks{\email{mail@mxsg.de}}\inst{2}
+	\firstname{Maximilian} \lastname{Stemmer-Grabow}\inst{2}\fnsep\thanks{\email{mail@mxsg.de}}
 }
 
 \institute{
@@ -52,6 +56,7 @@
 }%
 \maketitle
 %
+
 
 \section{Introduction}
 \label{sec:intro}
@@ -154,7 +159,7 @@ At GridKa every type of computing job can run on every node, thus each job type 
 
 The usage model defines which and how many jobs are scheduled. To make sure that there is always a high load on the system, we used a closed workload with enough jobs that the system is fully utilized. Each job type has a configurable \textit{job share} of the overall load.
 
-We extended Palladio with a \textit{load balancing strategy action}\footnote{https://github.com/PalladioSimulator/Palladio-Addon-ArchitecturalTemplates-LoadBalancing}, so that we can simulate load balancing strategies.
+We extended Palladio with a \textit{load balancing strategy action}\footurl{https://doi.org/10.5281/zenodo.1464569}, so that we can simulate load balancing strategies.
 This load balancing strategy action is contained in a load balancing component.
 In the assembly model all job components are connected with the load balancing component, which is the entry point of the system.
 This action decides on which node a job should be scheduled based on the currently free job slots of each working node. The load balancing strategies can be extended to evaluate different strategies.
@@ -183,8 +188,8 @@ Matching job information to local node performance information allows their reso
 For the purposes of this proof of concept, jobs were then grouped according to their type as indicated in the job reports, but the extraction framework allows to be configured for arbitrary groupings of the extracted jobs.
 Job resource requirement distributions for the different job types are extracted as distributions based on the empirical distributions in the data sets used for calibration, in the form of discrete probability density functions.
 
-The parameter extraction tool\footnote{https://github.com/mxsg/CMS-Model-Calibration} exports model parameter sets as JSON files.
-To simplify calibrating simulation models with these parameter sets, we created a Palladio plugin\footnote{https://github.com/mxsg/WLCG-Model-Construction} that can be used to automatically complete a blueprint of the simulation model (which defines the structure of the model as described in section \ref{sec:model}) with arbitrary parameter sets.
+The parameter extraction tool\footurl{https://doi.org/10.5281/zenodo.1464569} exports model parameter sets as JSON files.
+To simplify calibrating simulation models with these parameter sets, we created a Palladio plugin\footurl{https://doi.org/10.5281/zenodo.1464569} that can be used to automatically complete a blueprint of the simulation model (which defines the structure of the model as described in section \ref{sec:model}) with arbitrary parameter sets.
 This ensures an efficient and flexible model creation process.
 
 \section{Validation}
